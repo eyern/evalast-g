@@ -27,10 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7sifkt_2-o)rs_kr(qo33sk(cdpfj)x2_#0)h-y%i)k-2ug8n^'
 SECRET_KEY =  os.environ.get('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Allowed hosts - read from environment variable (comma-separated values)
 ALLOWED_HOSTS = ['evalast-g-production.up.railway.app', 'https://evalast-g-production.up.railway.app']
