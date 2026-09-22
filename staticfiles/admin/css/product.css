@@ -1,0 +1,339 @@
+/* =========================
+   Page Header
+========================= */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+
+.page-header h3{
+
+    font-weight:700;
+
+    color:#1e293b;
+
+}
+
+
+.page-header p{
+
+    color:#64748b;
+
+    margin:0;
+
+}
+
+
+
+
+
+/* =========================
+   Product Tools
+========================= */
+
+
+.product-tools{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+
+}
+
+
+
+.product-tools .search-box{
+
+    display:flex;
+
+    flex:1;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    overflow:hidden;
+
+}
+
+
+
+.product-tools .search-box input{
+
+    flex:1;
+
+    border:none;
+
+    padding:10px;
+
+    outline:none;
+
+}
+
+
+
+.product-tools .search-box button{
+
+    border:none;
+
+    background:white;
+
+    padding:0 15px;
+
+}
+
+
+
+
+
+/* =========================
+   Product Table
+========================= */
+
+
+.product-table-box{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+
+}
+
+
+
+.product-table-box table{
+
+    margin:0;
+
+}
+
+
+
+.product-table-box th{
+
+    background:#f8fafc;
+
+    color:#475569;
+
+    font-size:14px;
+
+}
+
+
+
+.product-table-box td{
+
+    vertical-align:middle;
+
+}
+
+
+
+
+
+/* =========================
+   Product Image
+========================= */
+
+
+.product-image{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:8px;
+
+    object-fit:cover;
+
+}
+
+
+
+
+
+/* =========================
+   Action Button
+========================= */
+
+
+.product-table-box .btn{
+
+    width:35px;
+
+    height:35px;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* =========================
+   Product Form
+========================= */
+
+.product-form-box{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+
+}
+
+
+
+.product-form-box label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+
+
+.product-form-box input,
+.product-form-box select,
+.product-form-box textarea{
+
+    border:1px solid #e2e8f0;
+
+    border-radius:8px;
+
+    padding:10px 12px;
+
+}
+
+
+
+.product-form-box input:focus,
+.product-form-box select:focus,
+.product-form-box textarea:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:none;
+
+}
+
+
+
+.product-form-box textarea{
+
+    resize:none;
+
+}
+
+
+
+.product-form-box .btn{
+
+    padding:10px 20px;
+
+    border-radius:8px;
+
+}
+
+.product-preview{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    border:1px solid #ddd;
+
+}
+
+
+/* =========================
+   Delete Product
+========================= */
+
+
+.delete-box{
+
+    background:white;
+
+    max-width:500px;
+
+    margin:auto;
+
+    padding:40px;
+
+    text-align:center;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+
+}
+
+
+
+.delete-icon{
+
+    font-size:50px;
+
+    color:#dc2626;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.delete-product-info{
+
+    margin:25px 0;
+
+}
+
+
+
+.delete-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+}

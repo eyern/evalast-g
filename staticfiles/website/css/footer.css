@@ -1,0 +1,198 @@
+/* ================================
+   FOOTER
+================================ */
+
+.site-footer {
+    background: #0c1530;
+    color: #fff;
+}
+
+
+/* Footer Main */
+
+.footer-container {
+    width: min(1200px, calc(100% - 40px));
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr) 1.2fr;
+    gap: 45px;
+
+    padding: 70px 0;
+}
+
+
+/* Brand */
+
+.footer-brand {
+    max-width: 280px;
+}
+
+.footer-brand .logo {
+    color: #fff;
+}
+
+.footer-brand .logo strong {
+    color: #fff;
+}
+
+.footer-brand .logo small {
+    color: #7f8ba5;
+}
+
+.footer-description {
+    margin: 20px 0;
+
+    color: #8d99b1;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+
+/* Social Icons */
+
+.socials {
+    display: flex;
+    gap: 8px;
+}
+
+.socials a {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid #263352;
+    border-radius: 8px;
+
+    color: #aeb8ca;
+    font-size: 12px;
+
+    transition: .25s;
+}
+
+.socials a:hover {
+    background: #B50009;
+    border-color: #B50009;
+    color: #fff;
+
+    transform: translateY(-3px);
+}
+
+
+/* Footer Links */
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 11px;
+}
+
+.footer-links h4 {
+    margin-bottom: 7px;
+
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.footer-links a,
+.footer-links p {
+    margin: 0;
+
+    color: #8793aa;
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    transform: translateX(3px);
+}
+
+
+/* Footer Bottom */
+
+.footer-bottom {
+    border-top: 1px solid #1d2944;
+
+    width: min(1200px, calc(100% - 40px));
+    margin: auto;
+
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: #63718c;
+    font-size: 10px;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1000px) {
+
+    .footer-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        max-width: 400px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .footer-container {
+        width: calc(100% - 30px);
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 35px 25px;
+
+        padding: 55px 0;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-bottom {
+        width: calc(100% - 30px);
+
+        min-height: 80px;
+
+        flex-direction: column;
+        justify-content: center;
+
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 400px) {
+
+    .footer-container {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+}

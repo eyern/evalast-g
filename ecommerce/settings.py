@@ -32,8 +32,10 @@ SECRET_KEY = 'django-insecure-7sifkt_2-o)rs_kr(qo33sk(cdpfj)x2_#0)h-y%i)k-2ug8n^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allowed hosts - read from environment variable (comma-separated values)
+ALLOWED_HOSTS = ['trendybikesconnect.co.ke', 'https://trendybikesconnect.co.ke']
 
+CSRF_TRUSTED_ORIGINS = ['https://trendybikesconnect.co.ke']
 
 # Application definition
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'app',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -130,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = 'media/'
@@ -140,6 +144,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+#whitenoise static stuff
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MESSAGE_TAGS = {
     messages.SUCCESS: "success",
