@@ -35,7 +35,7 @@ DEBUG = True
 # Allowed hosts - read from environment variable (comma-separated values)
 ALLOWED_HOSTS = ['evalast-g-production.up.railway.app', 'https://evalast-g-production.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://evalast-g-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://evalast-g-production.up.railway.app']https://evalast-g-production.up.railway.app/
 
 # Application definition
 
@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': os.environ['DB_PASS'],
-        'HOST': 'iriguchi.proxy.rlwy.net',
-        'PORT': '39202',
+        'HOST': 'postgres.railway.internal',
+        'PORT': '5432',
     }
 }
 
