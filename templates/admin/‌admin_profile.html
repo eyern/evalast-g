@@ -1,0 +1,374 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Admin Profile
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Page Header -->
+
+<div class="page-header">
+
+    <div>
+
+        <h3>Admin Profile</h3>
+
+        <p>
+            Manage your administrator profile information
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="row">
+
+
+    <!-- Profile Card -->
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body text-center">
+
+
+                <!-- Profile Image -->
+
+                <img
+                    src="{% static 'admin/images/user.png' %}"
+                    class="rounded-circle mb-3"
+                    width="120"
+                    height="120"
+                    style="object-fit: cover;"
+                    alt="Admin Profile">
+
+
+                <!-- Admin Name -->
+
+                <h5 class="mb-1">
+
+                    Administrator
+
+                </h5>
+
+
+                <!-- Admin Role -->
+
+                <p class="text-muted mb-3">
+
+                    Store Administrator
+
+                </p>
+
+
+                <span class="badge bg-primary">
+
+                    Admin
+
+                </span>
+
+
+                <hr>
+
+
+                <!-- Account Information -->
+
+                <div class="text-start">
+
+
+                    <p class="mb-3">
+
+                        <i class="bi bi-envelope me-2"></i>
+
+                        admin@example.com
+
+                    </p>
+
+
+                    <p class="mb-0">
+
+                        <i class="bi bi-calendar me-2"></i>
+
+                        Joined 20 Jul 2026
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Edit Profile -->
+
+    <div class="col-lg-8">
+
+        <div class="product-form-box mb-4">
+
+
+            <h5 class="mb-4">
+
+                <i class="bi bi-person me-2"></i>
+
+                Profile Information
+
+            </h5>
+
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+                <div class="row g-4">
+
+
+                    <!-- Profile Image -->
+
+                    <div class="col-12">
+
+                        <label>
+
+                            Profile Image
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="profile_image"
+                            class="form-control"
+                            accept="image/*">
+
+                    </div>
+
+
+
+                    <!-- First Name -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            First Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            class="form-control"
+                            value="Admin"
+                            placeholder="Enter first name">
+
+                    </div>
+
+
+
+                    <!-- Last Name -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Last Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            class="form-control"
+                            value="User"
+                            placeholder="Enter last name">
+
+                    </div>
+
+
+
+                    <!-- Username -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Username
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="username"
+                            class="form-control"
+                            value="admin"
+                            placeholder="Enter username">
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Email Address
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            value="admin@example.com"
+                            placeholder="Enter email">
+
+                    </div>
+
+
+
+                    <!-- Phone -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Phone Number
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            value="09xxxxxxxxx"
+                            placeholder="Enter phone number">
+
+                    </div>
+
+
+
+                    <!-- Current Password -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Current Password
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            name="current_password"
+                            class="form-control"
+                            placeholder="Enter current password">
+
+                    </div>
+
+
+
+                    <!-- New Password -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            New Password
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            name="new_password"
+                            class="form-control"
+                            placeholder="Enter new password">
+
+                    </div>
+
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="col-md-6">
+
+                        <label>
+
+                            Confirm New Password
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            name="confirm_password"
+                            class="form-control"
+                            placeholder="Confirm new password">
+
+                    </div>
+
+
+
+                    <!-- Buttons -->
+
+                    <div class="col-12">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Update Profile
+
+                        </button>
+
+
+                        <button
+                            type="reset"
+                            class="btn btn-secondary">
+
+                            Cancel Changes
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

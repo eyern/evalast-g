@@ -1,0 +1,251 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Reviews
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Reviews</h3>
+        <p>Manage customer reviews and ratings</p>
+    </div>
+
+</div>
+
+
+<!-- Search & Filter -->
+
+<div class="product-tools">
+
+    <form 
+    method="GET"
+    class="d-flex gap-3 w-100">
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search reviews...">
+
+        <button type="button">
+            <i class="bi bi-search"></i>
+        </button>
+
+    </div>
+
+
+    <select name="status" class="form-select" onchange="this.form.submit()">
+
+        <option value=""{% if not selected_status %}selected{% endif %}>All Status</option>
+
+        <option 
+            value="published"
+            {% if selected_status == 'published' %}selected{%  endif %}>
+            Published
+        </option>
+
+        <option
+            value="pending"
+            {% if selected_status == 'pending' %}selected{%  endif %}>
+            Pending
+        </option>
+
+    </select>
+
+    </form>
+
+</div>
+
+
+<!-- Reviews Table -->
+
+<div class="product-table-box">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for review in reviews %}
+
+                <tr>
+
+                    <!-- Number -->
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+
+                    <!-- Customer -->
+
+                    <td>
+                        <strong>
+                            {% if review.customer.profile.full_name %}
+
+                                {{ review.customer.profile.full_name }}
+
+                            {% else %}
+
+                                {{ review.customer.username }}
+
+                            {% endif %}
+                        </strong>
+                    </td>
+
+
+                    <!-- Book -->
+
+                    <td>
+                        {{ review.book.title }}
+                    </td>
+
+
+                    <!-- Rating -->
+
+                    <td>
+
+                        {% for i in "12345" %}
+
+                            {% if forloop.counter <= review.rating %}
+
+                                <i class="bi bi-star-fill text-warning"></i>
+
+                            {% else %}
+
+                                <i class="bi bi-star text-muted"></i>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        <span class="ms-1">
+
+                            {{ review.rating }}/5
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- Comment -->
+
+                    <td>
+
+                        {{ review.comment|truncatechars:60 }}
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        {% if review.status == 'published' %}
+
+                            <span class="badge bg-success">
+
+                                Published
+
+                            </span>
+
+                        {% elif review.status == 'pending' %}
+
+                            <span class="badge bg-warning text-dark">
+
+                                Pending
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Date -->
+
+                    <td>
+                        {{ review.created_at|date:"d M Y" }}
+                    </td>
+
+
+                    <!-- Action -->
+
+                    <td>
+
+                        <div class="d-flex gap-1">
+                        <a href="{% url 'review_detail' review.id %}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+
+                        <form
+                            action="{% url 'admin_delete_review' review.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this review?');"
+                            >
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="text-center py-4">
+
+                        No reviews found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,278 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/my_orders.css' %}">
+{% endblock %}
+
+{% block title %}Order #{{ order.id }} - EVALAST MOTORCYCLES{% endblock %}
+
+{% block main %}
+
+
+<div class="order-detail-page">
+
+    <!-- Header -->
+
+    <div class="order-detail-header">
+
+        <div>
+            <h1>Order #{{ order.id }}</h1>
+
+            <p>
+                Placed on
+                {{ order.created_at|date:"M d, Y - h:i A" }}
+            </p>
+        </div>
+
+        <span class="order-status {{ order.status }}">
+            {{ order.get_status_display }}
+        </span>
+
+    </div>
+
+
+    <!-- Order Items -->
+
+    <div class="order-card">
+
+        <div class="card-title">
+            <h2>Order Items</h2>
+        </div>
+
+
+        {% for item in order.items.all %}
+
+        <div class="order-detail-item">
+
+            <div class="detail-item-image">
+
+                {% if item.book.cover %}
+
+                    <img
+                        src="{{ item.book.cover.url }}"
+                        alt="{{ item.book.title }}"
+                    >
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="detail-item-info">
+
+                <h3>{{ item.book.title }}</h3>
+
+                <p>
+                    Price:
+                    KSh {{ item.price|intcomma }}
+                </p>
+
+                <p>
+                    Quantity:
+                    {{ item.quantity }}
+                </p>
+
+            </div>
+
+
+            <div class="detail-item-total">
+
+                KSh {{ item.get_total|intcomma }}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- Payment & Summary -->
+
+    <div class="order-detail-grid">
+
+        <!-- Payment -->
+
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Payment Information</h2>
+            </div>
+
+
+            <div class="info-row">
+
+                <span>Payment Method</span>
+
+                <strong>
+                    {{ order.get_payment_method_display }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>Payment Status</span>
+
+                <span class="payment-status {{ order.payment_status }}">
+                    {{ order.get_payment_status_display }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Summary -->
+
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Order Summary</h2>
+            </div>
+
+
+            {% if order.coupon %}
+
+            <div class="info-row">
+
+                <span>Coupon</span>
+
+                <strong>
+                    {{ order.coupon.code }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>Discount</span>
+
+                <strong class="discount-text">
+                    -KSh {{ order.discount_amount|intcomma }}
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="info-row">
+
+                <span>Shipping</span>
+
+                <strong>Free</strong>
+
+            </div>
+
+
+            <div class="detail-total">
+
+                <span>Total</span>
+
+                <strong>
+                    KSh {{ order.total_amount|intcomma }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Delivery Information -->
+
+    <div class="order-card">
+
+        <div class="card-title">
+            <h2>Delivery Information</h2>
+        </div>
+
+
+        <div class="delivery-info">
+
+            <div>
+                <span>Name</span>
+                <strong>{{ order.full_name }}</strong>
+            </div>
+
+
+            <div>
+                <span>Phone</span>
+                <strong>{{ order.phone }}</strong>
+            </div>
+
+
+            <div>
+                <span>Address</span>
+                <strong>{{ order.address }}</strong>
+            </div>
+
+
+            <div>
+                <span>City</span>
+                <strong>{{ order.city }}</strong>
+            </div>
+
+
+            <div>
+                <span>Country</span>
+                <strong>{{ order.country }}</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <!-- Actions -->
+
+    <div class="order-detail-actions">
+
+        <a
+            href="{% url 'my_orders' %}"
+            class="back-orders-btn"
+        >
+            ← Back to My Orders
+        </a>
+
+        <div class="order-action-buttons">
+
+        {% if order.status == 'pending' %}
+
+        <form
+            method="POST"
+            action="{% url 'cancel_order' order.id %}"
+        >
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="cancel-order-btn"
+                onclick="return confirm('Are you sure you want to cancel this order?');"
+            >
+                Cancel Order
+            </button>
+        </form>
+
+        {% endif %}
+
+        <a
+            href="{% url 'shop' %}"
+            class="shop-btn"
+        >
+            Continue Shopping
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,243 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}
+    About Us - Evalast Motorcycles
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/about.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<div class="about-page">
+
+    <!-- Hero -->
+
+    <section class="about-hero">
+
+        <div class="about-hero-content">
+
+            <span class="about-label">
+                ABOUT EVALAST MOTORCYCLES
+            </span>
+
+            <h1>
+                Future Of 
+                <br>
+                Urban Commuting.
+            </h1>
+
+            <p>
+                Evalast Motorcycles is an online store powered by GARAGE ZERO for riders
+                who love shopping for spares & accessories at their own convinience; exploring
+                new products, and finding their next favorite ride.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- About -->
+
+    <section class="about-section">
+
+        <div class="about-content">
+
+            <div class="about-text">
+
+                <span class="section-label">
+                    WHO WE ARE
+                </span>
+
+                <h2>
+                    A place for every kind of rider.
+                </h2>
+
+                <p>
+                    At EVALAST MOTORCYCLES, we believe that a good bike can change
+                    the way you see the world. Our goal is to make
+                    discovering and buying bikes & our products simple, enjoyable,
+                    and accessible.
+                </p>
+
+                <p>
+                    From timeless offers to modern bestsellers,
+                    we bring together a collection of products & accessories for
+                    different interests, and moments.
+                </p>
+
+            </div>
+
+            <div class="about-image">
+                <img
+                    src="{% static 'website/images/book/garage-zero.png' %}"
+                    alt="EVALAST MOTORCYCLES"
+                >
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+
+    <section class="about-values">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                WHY Evalast Motorcycles?
+            </span>
+
+            <h2>
+                More than just a bike shop.
+            </h2>
+
+            <p>
+                Everything we do is designed around making
+                your riding journey better.
+            </p>
+
+        </div>
+
+
+        <div class="values-grid">
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    <i data-lucide="book-open"></i>
+                </div>
+
+                <h3>
+                    Curated Products
+                </h3>
+
+                <p>
+                    Explore a carefully selected collection
+                    of bikes & products across different categories and brands.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    <i data-lucide="search"></i>
+                </div>
+
+                <h3>
+                    Easy Discovery
+                </h3>
+
+                <p>
+                    Find spares quickly with categories,
+                    search, ratings, and personalized browsing.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    <i data-lucide="heart"></i>
+                </div>
+
+                <h3>
+                    Made for Riders
+                </h3>
+
+                <p>
+                    Save products you love, share your thoughts,
+                    and keep track of the products you want to buy.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    <i data-lucide="shopping-bag"></i>
+                </div>
+
+                <h3>
+                    Simple Shopping
+                </h3>
+
+                <p>
+                    Add your favorite items to your cart and
+                    enjoy a simple and convenient checkout experience.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Mission -->
+
+    <section class="about-mission">
+
+        <div class="mission-content">
+
+            <span class="section-label">
+                OUR MISSION
+            </span>
+
+            <h2>
+                Helping riders find
+                their next great adventure.
+            </h2>
+
+            <p>
+                Whether you're looking for an inspiring bike,
+                an exciting adventure, a quiet escape, or simply
+                a good ride, EVALAST MOTORCYCLES is here to help
+                you find it.
+            </p>
+
+            <a href="{% url 'shop' %}" class="mission-btn">
+                Start Shopping
+                <i data-lucide="arrow-right"></i>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="about-cta">
+
+        <div class="cta-content">
+
+            <h2>
+                Your next favorite ride
+                might be waiting for you.
+            </h2>
+
+            <p>
+                Start exploring the EVALAST MOTORCYCLES collection today.
+            </p>
+
+            <a href="{% url 'shop' %}" class="cta-btn">
+                Browse Collection
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

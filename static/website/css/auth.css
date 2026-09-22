@@ -1,0 +1,448 @@
+/* =====================================
+   AUTH PAGE
+===================================== */
+
+.auth-page {
+    min-height: 100vh;
+    padding: 70px 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+/* =====================================
+   CONTAINER
+===================================== */
+
+.auth-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 100px;
+    align-items: center;
+}
+
+
+/* =====================================
+   LEFT SIDE
+===================================== */
+
+.auth-label {
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    color: #8b7355;
+}
+
+
+.auth-intro h1 {
+    max-width: 560px;
+
+    margin-bottom: 24px;
+
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.05;
+
+    color: #1f2933;
+}
+
+
+.auth-intro h1 span {
+    display: block;
+    color: #8b7355;
+}
+
+
+.auth-intro > p {
+    max-width: 500px;
+
+    font-size: 16px;
+    line-height: 1.8;
+
+    color: #6b7280;
+
+    margin-bottom: 45px;
+}
+
+
+/* =====================================
+   FEATURES
+===================================== */
+
+.auth-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+.auth-feature {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+.auth-feature-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    color: #8b7355;
+}
+
+
+.auth-feature-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+.auth-feature strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 15px;
+
+    color: #1f2933;
+}
+
+
+.auth-feature span {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+
+/* =====================================
+   AUTH CARD
+===================================== */
+
+.auth-card {
+    padding: 45px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 20px;
+}
+
+
+.auth-small-title {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #8b7355;
+}
+
+
+.auth-card-header h2 {
+    margin-bottom: 10px;
+
+    font-size: 32px;
+
+    color: #1f2933;
+}
+
+
+.auth-card-header p {
+    margin-bottom: 30px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+
+/* =====================================
+   DJANGO MESSAGE
+===================================== */
+
+.auth-message {
+    padding: 13px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+}
+
+
+.auth-message.error {
+    color: #b91c1c;
+    background: #fef2f2;
+}
+
+
+.auth-message.success {
+    color: #15803d;
+    background: #f0fdf4;
+}
+
+
+.auth-message.warning {
+    color: #92400e;
+    background: #fffbeb;
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+.auth-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.auth-group label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #374151;
+}
+
+
+.auth-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.auth-input > svg {
+    position: absolute;
+
+    left: 16px;
+
+    width: 18px;
+    height: 18px;
+
+    color: #9ca3af;
+
+    pointer-events: none;
+}
+
+
+.auth-input input {
+    width: 100%;
+
+    padding: 15px 16px 15px 48px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition: 0.25s ease;
+}
+
+
+.auth-input input:focus {
+    border-color: #8b7355;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(139, 115, 85, 0.1);
+}
+
+
+.auth-input input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* =====================================
+   SUBMIT BUTTON
+===================================== */
+
+.auth-submit {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background: #1f2933;
+    color: white;
+
+    transition: 0.25s ease;
+}
+
+
+.auth-submit:hover {
+    transform: translateY(-2px);
+
+    background: #111827;
+}
+
+
+.auth-submit svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.auth-footer {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 25px;
+
+    font-size: 14px;
+}
+
+
+.auth-footer p {
+    color: #6b7280;
+}
+
+
+.auth-footer a {
+    font-weight: 600;
+
+    color: #8b7355;
+
+    text-decoration: none;
+}
+
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+    .auth-container {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+
+        max-width: 650px;
+    }
+
+
+    .auth-intro {
+        text-align: center;
+    }
+
+
+    .auth-intro h1 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .auth-intro > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .auth-feature {
+        text-align: left;
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        padding: 40px 15px;
+    }
+
+
+    .auth-intro {
+        display: none;
+    }
+
+
+    .auth-container {
+        display: block;
+    }
+
+
+    .auth-card {
+        padding: 30px 22px;
+
+        border-radius: 16px;
+    }
+
+
+    .auth-card-header h2 {
+        font-size: 27px;
+    }
+
+}

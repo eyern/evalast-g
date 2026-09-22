@@ -1,0 +1,272 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Customer
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Edit Customer</h3>
+        <p>Update customer information</p>
+    </div>
+
+    <a href="{% url 'customer_detail' customer.id %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <h5>Customer Information</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+                <!-- Profile Image -->
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Profile Image
+                    </label>
+
+                    <div class="mb-3">
+
+                        {% if customer.profile.profile_image %}
+
+                            <img
+                                src="{{ customer.profile.profile_image.url }}"
+                                width="100"
+                                height="100"
+                                class="rounded-circle"
+                                alt="{{ profile.full_name }}"
+                                style="object-fit: cover;"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="{% static 'admin/images/user.png' %}"
+                                width="100"
+                                height="100"
+                                class="rounded-circle"
+                                alt="Customer"
+                            >
+
+                        {% endif %}
+
+                    </div>
+
+                    <input
+                        type="file"
+                        name="profile_image"
+                        class="form-control"
+                    >
+
+                </div>
+
+
+                <!-- First Name -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        class="form-control"
+                        value="{{ profile.full_name|default_if_none:''}}"
+                        placeholder="Enter full name"
+                    >
+
+                </div>
+
+
+
+                <!-- Email -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ customer.email }}"
+                        placeholder="Enter email"
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        value="{{ profile.phone|default_if_none:''}}"
+                        placeholder="Enter phone number"
+                    >
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Account Status
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select"
+                    >
+
+                        <option
+                            value="active"
+                            {% if customer.is_active %}selected{% endif %}
+                        >
+                            Active
+                        </option>
+
+                        <option
+                            value="blocked"
+                            {% if not customer.is_active %}selected{% endif %}
+                        >
+                            Blocked
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Address -->
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Enter address"
+                    >{{ profile.address|default_if_none:'' }}</textarea>
+
+                </div>
+
+
+                <!-- City -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        name="city"
+                        class="form-control"
+                        value="{{ profile.city|default_if_none:'' }}"
+                        placeholder="Enter city"
+                    >
+
+                </div>
+
+
+                <!-- Country -->
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Country
+                    </label>
+
+                    <input
+                        type="text"
+                        name="country"
+                        class="form-control"
+                        value="{{ profile.country|default_if_none:'' }}"
+                        placeholder="Enter country"
+                    >
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="col-12">
+
+                    <form method="POST" action="{% url 'edit_customer' customer.id %}">
+                        {% csrf_token %}
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            <i class="bi bi-check-circle"></i>
+                            Update Customer
+
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'delete_customer' customer.id %}">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+
+                        <i class="bi bi-check-circle"></i>
+                        Delete Customer Account
+
+                    </button>
+                    </form>
+
+
+                    <a
+                        href="{% url 'customer_detail' customer.id %}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evalast Motorcycles</title>
+    <link rel="stylesheet" href="{% static 'website/css/footer.css' %}">
+</head>
+<body>
+    <footer class="site-footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <a href="/" class="logo">
+                <span class="logo-icon">E</span>
+
+                <div>
+                    <strong>EVALAST</strong>
+                    <small>Future of Urban Commuting</small>
+                </div>
+            </a>
+            <br>
+
+            <p>
+                We do countrywide deliveries.
+                Place your order today!.
+            </p>
+            <br>
+
+            <div class="socials">
+                <a href="#">f</a>
+                <a href="#">𝕏</a>
+                <a href="#">◎</a>
+            </div>
+
+        </div>
+
+
+        <div class="footer-links">
+            <h4>Customer</h4>
+            <a href="#">My Account</a>
+            <a href="{% url 'my_orders' %}">My Orders</a>
+            <a href="#">Wishlist</a>
+            <a href="#">Shipping</a>
+            <a href="#">Returns</a>
+        </div>
+
+
+        <div class="footer-links">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+            <a href="#">FAQ</a>
+        </div>
+
+
+        <div class="footer-links">
+            <h4>Get in touch</h4>
+            <p>✉ garagezero237@gmail.com</p>
+            <p>☎ 0714-314-360</p>
+            <p>📍 Thika, Embu, Eldoret.</p>
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+        <p>©2026 Evalast Motorcycles. All rights reserved.</p>
+        <p>Crafted by Eyern.</p>
+    </div>
+
+</footer>
+</body>
+</html>

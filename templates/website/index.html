@@ -1,0 +1,899 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/home.css' %}">
+{% endblock %}
+{% load humanize %}
+{% block title %}
+Home - Evalast Motorcycles
+{% endblock %}
+{% block main %}
+<!-- ================= HERO SECTION ================= -->
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            ✦ Future of Urban Commuting
+        </span>
+
+        <h1>
+            
+            <span>Evalast Motorcycles.</span>
+        </h1>
+
+        <p>
+            Explore thousands of products from safety gear, spares
+            motorcycles, and today's best sellers.
+        </p>
+
+        <div class="hero-search">
+
+            <form action="{% url 'search' %}" method="GET">
+
+                <span class="search-icon">
+                    <i data-lucide="search"></i>
+                </span>
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ search }}"
+                    placeholder="Search motorcycles, spares..."
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="hero-actions">
+            <a href="{% url 'shop' %}" class="btn-primary">
+                Shop Now
+                <span>→</span>
+            </a>
+
+            <a href="#featured" class="btn-secondary">
+                View Featured
+            </a>
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="stat">
+                <strong>10K+</strong>
+                <span>Products</span>
+            </div>
+
+            <div class="stat">
+                <strong>2K+</strong>
+                <span>Shoppers</span>
+            </div>
+
+            <div class="stat">
+                <strong>99K+</strong>
+                <span>Sold Items</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+        <div class="hero-glow"></div>
+
+        <div class="floating-book book-one">
+            <img src="{% static 'website/images/book/home-ev.pn' %}" alt="Evalast">
+        </div>
+
+        <div class="floating-book book-two">
+            <img src="{% static 'website/images/book/home-1.jg' %}" alt="Evalast">
+        </div>
+
+        <div class="floating-book book-main">
+            <img src="{% static 'website/images/book/home.pn' %}" alt="Featured">
+        </div>
+
+        <div class="rating-card">
+            <div class="rating-stars">★★★★★</div>
+            <strong>4.9 / 5</strong>
+            <span>Customer Rating</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CATEGORIES ================= -->
+<section class="categories-section">
+
+    <div class="section-heading">
+
+        <div>
+            <span class="section-label">EXPLORE</span>
+
+            <h2>Browse by Category</h2>
+
+            <p>
+                Find products by exploring our popular categories.
+            </p>
+        </div>
+
+        <a href="{% url 'category' %}" class="view-all">
+            All Categories →
+        </a>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        {% for category in categories %}
+
+        <a href="{% url 'category_books' category.id %}" class="category-card">
+            <div class="category-icon">
+                {% if category.icon %}
+                <i data-lucide="{{ category.icon }}"></i>
+                {% else %}
+                <i data-lucide="book"></i>  
+                {% endif %}
+
+            </div>
+
+            <div>
+                <h3>{{ category.name }}</h3>
+                <span>Available products : {{ category.books.count }}</span>
+            </div>
+            <span class="category-arrow">→</span>
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURED BOOKS ================= -->
+<section class="books-section" id="featured">
+
+    <div class="section-heading">
+
+        <div>
+            <span class="section-label">HANDPICKED FOR YOU</span>
+
+            <h2>Featured</h2>
+
+            <p>
+                Carefully selected products our shoppers are loving right now.
+            </p>
+        </div>
+
+        <a href="{% url 'featured_books' %}" class="view-all">
+            View All →
+        </a>
+
+    </div>
+
+
+    <div class="books-grid">
+
+        {% for book in featured_books %}
+
+        
+        <article class="book-card">
+
+            <div class="book-image">
+
+                <a href="{% url 'book_detail' book.id %}">
+
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                    {% else %}
+                        <img src="{% static 'website/images/books/default-book.jpg' %}" alt="{{ product.name }}">
+                    {% endif %}
+
+                </a>
+
+                    {% if book.id in wishlist_book_ids %}
+
+                    <a
+                        href="{% url 'remove_from_wishlist' book.id %}"
+                        class="wishlist-btn wishlist-active"
+                        title="Remove from wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'add_to_wishlist' book.id %}"
+                        class="wishlist-btn"
+                        title="Add to wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    {{ book.category.name }}
+                </span>
+
+                <h3>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
+
+                <p class="book-author">
+                    {{ book.author }}
+                </p>
+
+
+                <div class="bd-rating">
+
+    <div class="bd-stars">
+
+        {% for i in "12345" %}
+
+            {% if forloop.counter <= average_rating %}
+                <i data-lucide="star"></i>
+            {% else %}
+                <i data-lucide="star" class="empty-star"></i>
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    <span>
+        {{ product.average_rating|default:"0"|floatformat:1 }}
+        ({{ product.review_count|default:"0" }} Reviews)
+    </span>
+
+</div>
+
+
+                <div class="book-bottom">
+
+                    <div class="book-price">
+
+                        <strong>
+                         KSh   {{ book.price|intcomma }} 
+                        </strong>
+
+                    </div>
+
+                    <a class="cart-btn" href="{% url 'add_to_cart' book.id %}">
+                        <i data-lucide="shopping-cart"></i>  
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        </a>
+
+        {% empty %}
+
+        
+
+        <!-- Temporary demo cards -->
+
+        <article class="book-card">
+            <div class="book-image">
+                <img src="{% static 'website/images/books/book-1.jpg' %}" alt="Evalast">
+                <button class="wishlist-btn">♡</button>
+            </div>
+
+            <div class="book-info">
+                <span class="book-category">Motorcycles</span>
+                <h3>Evalast Kuga</h3>
+                <p class="book-author">by Garage Zero</p>
+
+                <div class="book-rating">
+                    <span class="stars">★★★★★</span>
+                    <span>(128)</span>
+                </div>
+
+                <div class="book-bottom">
+                    <div class="book-price">
+                        <strong>KSh </strong>
+                    </div>
+                    <button class="cart-btn">🛒</button>
+                </div>
+            </div>
+        </article>
+
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= BEST SELLERS ================= -->
+<section class="best-seller-section">
+
+    <div class="best-seller-content">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">MOST LOVED</span>
+
+                <h2>Best Selling 🔥 </h2>
+
+                <p>
+                    The products everyone is talking about.
+                </p>
+            </div>
+
+            <a href="{% url 'best_sellers' %}" class="view-all">
+                Shop Best Sellers →
+            </a>
+
+        </div>
+
+
+        <div class="books-grid">
+
+        {% for book in best_sellers %}
+
+        
+        <article class="book-card">
+
+            <div class="book-image">
+
+                <a href="{% url 'book_detail' book.id %}">
+
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                    {% else %}
+                        <img src="{% static 'website/images/books/default-book.jpg' %}" alt="{{ product.name }}">
+                    {% endif %}
+
+                </a>
+
+                    {% if book.id in wishlist_book_ids %}
+
+                    <a
+                        href="{% url 'remove_from_wishlist' book.id %}"
+                        class="wishlist-btn wishlist-active"
+                        title="Remove from wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'add_to_wishlist' book.id %}"
+                        class="wishlist-btn"
+                        title="Add to wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    {{ book.category.name }}
+                </span>
+
+                <h3>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
+
+                <p class="book-author">
+                    {{ book.author }}
+                </p>
+
+
+                <div class="bd-rating">
+
+    <div class="bd-stars">
+
+        {% for i in "12345" %}
+
+            {% if forloop.counter <= average_rating %}
+                <i data-lucide="star"></i>
+            {% else %}
+                <i data-lucide="star" class="empty-star"></i>
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    <span>
+        {{ product.average_rating|default:"0"|floatformat:1 }}
+        ({{ product.review_count|default:"0" }} Reviews)
+    </span>
+
+</div>
+
+
+                <div class="book-bottom">
+
+                    <div class="book-price">
+
+                        <strong>
+                            KSh  {{ book.price|intcomma }}
+                        </strong>
+
+                    </div>
+
+                    <a class="cart-btn" href="{% url 'add_to_cart' book.id %}">
+                        <i data-lucide="shopping-cart"></i>  
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        </a>
+
+        {% empty %}
+
+        
+
+        <!-- Temporary demo cards -->
+
+        <article class="book-card">
+            <div class="book-image">
+                <img src="{% static 'website/images/books/book-1.jpg' %}" alt="Evalast">
+                <button class="wishlist-btn">♡</button>
+            </div>
+
+            <div class="book-info">
+                <span class="book-category">Fiction</span>
+                <h3>The Midnight Library</h3>
+                <p class="book-author">by Matt Haig</p>
+
+                <div class="book-rating">
+                    <span class="stars">★★★★★</span>
+                    <span>(128)</span>
+                </div>
+
+                <div class="book-bottom">
+                    <div class="book-price">
+                        <strong>$18.99</strong>
+                    </div>
+                    <button class="cart-btn">🛒</button>
+                </div>
+            </div>
+        </article>
+
+
+        {% endfor %}
+
+    </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= PROMO BANNER ================= -->
+<section class="promo-section">
+
+    <div class="promo-content">
+
+        <span class="promo-label">
+            ✦ COUNTRYWIDE DELIVERY
+        </span>
+
+        <h2>
+            We offer <br>
+            <span>Countrywide Delivery.</span>
+        </h2>
+
+        <p>
+            Get <strong>10% OFF</strong> Shipping Fees on your first order!
+        </p>
+
+        <a href="{% url 'shop' %}" class="promo-btn">
+            Start Shopping →
+        </a>
+
+    </div>
+
+
+    <div class="promo-books">
+
+        <img
+            src="{% static 'website/images/book/deliveries-1.jpg' %}"
+            alt="Evalast"
+            class="promo-book promo-one">
+
+        <img
+            src="{% static 'website/images/book/deliveries-4.jpg' %}"
+            alt="Evalast"
+            class="promo-book promo-two">
+
+        <img
+            src="{% static 'website/images/book/deliveries-5.jpg' %}"
+            alt="Evalast"
+            class="promo-book promo-three">
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= NEW ARRIVALS ================= -->
+<section class="books-section">
+
+```
+<div class="section-heading">
+
+    <div>
+        <span class="section-label">JUST LANDED</span>
+
+        <h2>New Arrivals 🆕 </h2>
+
+        <p>
+            Fresh products & new items have just arrived.
+        </p>
+    </div>
+
+    <a href="{% url 'new_arrival' %}" class="view-all">
+        View All →
+    </a>
+
+</div>
+
+
+<div class="books-grid">
+
+    {% for book in new_arrivals %}
+
+    <article class="book-card">
+
+        <div class="book-image">
+
+            <a href="{% url 'book_detail' book.id %}">
+
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                {% else %}
+                    <img
+                        src="{% static 'website/images/books/default-book.jpg' %}"
+                        alt="{{ book.title }}"
+                    >
+                {% endif %}
+
+            </a>
+
+
+            {% if book.id in wishlist_book_ids %}
+
+                <a
+                    href="{% url 'remove_from_wishlist' book.id %}"
+                    class="wishlist-btn wishlist-active"
+                    title="Remove from wishlist"
+                >
+                    <i data-lucide="heart"></i>
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'add_to_wishlist' book.id %}"
+                    class="wishlist-btn"
+                    title="Add to wishlist"
+                >
+                    <i data-lucide="heart"></i>
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="book-info">
+
+            <span class="book-category">
+                {{ book.category.name }}
+            </span>
+
+
+            <h3>
+                <a href="{% url 'book_detail' book.id %}">
+                    {{ book.title }}
+                </a>
+            </h3>
+
+
+            <p class="book-author">
+                {{ book.author }}
+            </p>
+
+
+            <div class="bd-rating">
+
+                <div class="bd-stars">
+
+                    {% for i in "12345" %}
+
+                        {% if forloop.counter <= book.average_rating|default:0 %}
+
+                            <i data-lucide="star"></i>
+
+                        {% else %}
+
+                            <i
+                                data-lucide="star"
+                                class="empty-star"
+                            ></i>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                <span>
+                    {{ book.average_rating|default:"0"|floatformat:1 }}
+                    ({{ book.review_count|default:"0" }} Reviews)
+                </span>
+
+            </div>
+
+
+            <div class="book-bottom">
+
+                <div class="book-price">
+
+                    <strong>
+                        KSh  {{ book.price|intcomma }}
+                    </strong>
+
+                </div>
+
+
+                <a
+                    class="cart-btn"
+                    href="{% url 'add_to_cart' book.id %}"
+                >
+                    <i data-lucide="shopping-cart"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    {% empty %}
+
+        <p>No new arrivals available right now.</p>
+
+    {% endfor %}
+
+</div>
+```
+
+</section>
+
+
+
+<!-- ================= AUTHORS ================= -->
+<section class="authors-section">
+
+    <div class="section-heading centered">
+
+        <span class="section-label">MEET THE BRANDS</span>
+
+        <h2>Popular Brands</h2>
+
+    </div>
+
+
+    <div class="authors-grid">
+
+        <div class="author-card">
+
+            <div class="author-avatar">
+                <img
+                    src="{% static 'website/images/book/garage-zero.png' %}"
+                    alt="brand logo"
+                >
+            </div>
+
+            <h3>Evalast Motorcycles</h3>
+
+
+            <!-- <a href="#">View Books →</a> -->
+
+        </div>
+
+
+        <div class="author-card">
+
+            <div class="author-avatar">
+                <img
+                    src="{% static 'website/images/book/garage-zero.png' %}"
+                    alt="brand logo"
+                >
+            </div>
+
+            <h3>Sinoray SR</h3>
+
+
+        </div>
+
+
+        <div class="author-card">
+
+            <div class="author-avatar">
+                <img
+                    src="{% static 'website/images/book/garage-zero.png' %}"
+                    alt="brand logo"
+                >
+            </div>
+
+            <h3>Evalast-Flash</h3>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= REVIEWS ================= -->
+<section class="reviews-section">
+
+    <div class="section-heading centered">
+
+        <span class="section-label">CUSTOMERS FEEDBACK</span>
+
+        <h2>What Our Customers Say</h2>
+
+    </div>
+
+
+    <div class="reviews-grid">
+
+        <article class="review-card">
+
+            <div class="review-top">
+                <div class="review-user">
+                    <div class="review-avatar">J</div>
+
+                    <div>
+                        <strong>John</strong>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+
+                <span class="quote-mark">“</span>
+            </div>
+
+            <div class="review-stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Amazing collection and incredibly easy to find
+                exactly what I was looking for. The order arrived
+                quickly and in perfect condition.
+            </p>
+
+        </article>
+
+
+        <article class="review-card">
+
+            <div class="review-top">
+
+                <div class="review-user">
+
+                    <div class="review-avatar">A</div>
+
+                    <div>
+                        <strong>Allan</strong>
+                        <span>Verified Buyer</span>
+                    </div>
+
+                </div>
+
+                <span class="quote-mark">“</span>
+
+            </div>
+
+            <div class="review-stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Evalast Motorcycles my favorite place to shop for spares & accessories.
+                 The recommendations are surprisingly good.
+            </p>
+
+        </article>
+
+
+        <article class="review-card">
+
+            <div class="review-top">
+
+                <div class="review-user">
+
+                    <div class="review-avatar">K</div>
+
+                    <div>
+                        <strong>Kevin</strong>
+                        <span>Verified Buyer</span>
+                    </div>
+
+                </div>
+
+                <span class="quote-mark">“</span>
+
+            </div>
+
+            <div class="review-stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Beautiful website, great prices and a huge selection.
+                I have already recommended it to all my friends with evalast bikes.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<!-- <script src="{% static 'website/js/home.js' %}"></script> -->
+
+{% endblock %}

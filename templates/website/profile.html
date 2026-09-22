@@ -1,0 +1,141 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+    My Profile - EVALAST MOTORCYCLES
+{% endblock %}
+
+{% block main %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+        <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        <!-- Profile Header -->
+        <div class="profile-header">
+
+            <div class="profile-image">
+
+                {% if profile.profile_image %}
+
+                    <img
+                        src="{{ profile.profile_image.url }}"
+                        alt="Profile Image"
+                    >
+
+                {% else %}
+
+                    <div class="default-profile">
+                        {% if profile.full_name %}
+                            {{ profile.full_name|first|upper }}
+                        {% else %}
+                            {{ user.username|first|upper }}
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <h1>
+                {{ profile.full_name|default:user.username }}
+            </h1>
+
+            <p>
+                @{{ user.username }}
+            </p>
+
+        </div>
+
+
+        <!-- Profile Information -->
+        <div class="profile-info">
+
+            <!-- Username -->
+            <div class="info-item">
+                <span>Username</span>
+                <strong>
+                    {{ user.username }}
+                </strong>
+            </div>
+
+
+            <!-- Email -->
+            <div class="info-item">
+                <span>Email</span>
+                <strong>
+                    {{ user.email }}
+                </strong>
+            </div>
+
+
+            <!-- Phone -->
+            <div class="info-item">
+                <span>Phone</span>
+                <strong>
+                    {{ profile.phone|default:"Not set" }}
+                </strong>
+            </div>
+
+
+            <!-- Address -->
+            <div class="info-item">
+                <span>Address</span>
+                <strong>
+                    {{ profile.address|default:"Not set" }}
+                </strong>
+            </div>
+
+
+            <!-- City -->
+            <div class="info-item">
+                <span>City</span>
+                <strong>
+                    {{ profile.city|default:"Not set" }}
+                </strong>
+            </div>
+
+
+            <!-- Country -->
+            <div class="info-item">
+                <span>Country</span>
+                <strong>
+                    {{ profile.country|default:"Not set" }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- Profile Actions -->
+        <div class="profile-actions">
+
+            <a href="{% url 'edit_profile' %}">
+                Edit Profile
+            </a>
+
+            <a href="{% url 'delete_profile' %}">
+                Delete Account
+            </a>
+
+            <a href="{% url 'index' %}">
+                Back to Home
+            </a>
+
+            
+        </div>
+
+        
+
+    </div>
+
+</div>
+
+{% endblock %}

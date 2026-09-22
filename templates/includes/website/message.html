@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evalast Motorcycles</title>
+</head>
+    <style>
+       .auth-messages{
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.auth-message{
+    min-width: 300px;
+    max-width: 420px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 18px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+
+    animation: messageSlide .4s ease;
+}
+
+
+.auth-message.success{
+    background: #ecfdf3;
+    color: #166534;
+    border-left: 4px solid #22c55e;
+}
+
+
+.auth-message.error{
+    background: #fef2f2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
+}
+
+
+.auth-message.warning{
+    background: #fffbeb;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+}
+
+
+.auth-message.info{
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-left: 4px solid #3b82f6;
+}
+
+
+.message-close{
+    border: none;
+    background: transparent;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    margin-left: 20px;
+
+    color: inherit;
+}
+
+
+@keyframes messageSlide{
+
+    from{
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+    </style>
+<body>
+    {% block main %}
+
+{% if messages %}
+    <div class="auth-messages">
+
+        {% for message in messages %}
+
+            <div class="auth-message {{ message.tags }}">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="message-close"
+                    onclick="this.parentElement.remove()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% endif %}
+
+
+{% endblock %}
+<script>
+const messages =
+    document.querySelectorAll(".auth-message");
+
+
+messages.forEach((message) => {
+
+    setTimeout(() => {
+
+        message.remove();
+
+    }, 4000);
+
+});
+</script>
+</body>
+</html>

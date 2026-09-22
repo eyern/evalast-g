@@ -1,0 +1,278 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Order Details
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Order #{{ order.id }}</h3>
+        <p>View customer order details</p>
+    </div>
+
+    <a href="{% url 'orders' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back
+    </a>
+
+</div>
+
+
+<!-- Order Information -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <h5>Order Information</h5>
+    </div>
+
+    <div class="card-body">
+
+        <p>
+            <strong>Customer:</strong>
+            {{ order.customer }}
+        </p>
+
+        <p>
+            <strong>Order ID:</strong>
+            #{{ order.id }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {{ order.created_at|date:"d M Y, h:i A" }}
+        </p>
+
+
+        <!-- Payment -->
+
+        <p>
+            <strong>Payment:</strong>
+
+            {% if order.payment_status == "paid" %}
+
+                <span class="badge bg-success">
+                    Paid
+                </span>
+
+            {% elif order.payment_status == "pending" %}
+
+                <span class="badge bg-warning text-dark">
+                    Pending
+                </span>
+
+            {% elif order.payment_status == "failed" %}
+
+                <span class="badge bg-danger">
+                    Failed
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-secondary">
+                    {{ order.payment_status }}
+                </span>
+
+            {% endif %}
+
+        </p>
+
+
+        <!-- Status -->
+
+        <p>
+            <strong>Status:</strong>
+
+            {% if order.status == "pending" %}
+
+                <span class="badge bg-warning text-dark">
+                    Pending
+                </span>
+
+            {% elif order.status == "processing" %}
+
+                <span class="badge bg-primary">
+                    Processing
+                </span>
+
+            {% elif order.status == "shipped" %}
+
+                <span class="badge bg-info">
+                    Shipped
+                </span>
+
+            {% elif order.status == "delivered" %}
+
+                <span class="badge bg-success">
+                    Delivered
+                </span>
+
+            {% elif order.status == "cancelled" %}
+
+                <span class="badge bg-danger">
+                    Cancelled
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-secondary">
+                    {{ order.status }}
+                </span>
+
+            {% endif %}
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Order Items -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <h5>Order Items</h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in order_items %}
+
+                    <tr>
+
+                        <!-- Book -->
+
+                        <td>
+                            {{ item.book.title }}
+                        </td>
+
+
+                        <!-- Quantity -->
+
+                        <td>
+                            {{ item.quantity }}
+                        </td>
+
+
+                        <!-- Price -->
+
+                        <td>
+                           KSh {{ item.price|intcomma }}
+                        </td>
+
+
+                        <!-- Subtotal -->
+
+                        <td>
+                            KSh {{ item.get_total|intcomma }}
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="text-center py-4"
+                        >
+                            No items found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Order Summary -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <h5>Order Summary</h5>
+    </div>
+
+    <div class="card-body">
+
+        {% if order.coupon %}
+
+        <p>
+            <strong>Coupon:</strong>
+            {{ order.coupon.code }}
+        </p>
+
+        <p>
+            <strong>Discount:</strong>
+            - KSh {{ order.discount_amount|intcomma }}
+        </p>
+
+        {% endif %}
+
+
+        <p class="mb-0">
+
+            <strong>Total:</strong>
+
+            <span class="fs-5">
+                KSh {{ order.total_amount|intcomma }}
+            </span>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- Actions -->
+
+<div class="mb-4">
+
+    <a
+        href="{% url 'orders' %}"
+        class="btn btn-secondary"
+    >
+        <i class="bi bi-arrow-left"></i>
+        Back to Orders
+    </a>
+
+</div>
+
+{% endblock %}

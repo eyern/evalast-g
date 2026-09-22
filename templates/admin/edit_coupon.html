@@ -1,0 +1,154 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Coupon
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h3>Edit Coupon</h3>
+        <p>Update discount coupon information</p>
+    </div>
+    <a href="{% url 'coupons' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back
+    </a>
+</div>
+
+<div class="product-form-box">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row g-4">
+
+            <!-- Coupon Code -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Coupon Code
+                </label>
+                <input
+                    type="text"
+                    name="code"
+                    class="form-control"
+                    value="{{ coupon.code }}"
+                    placeholder="Enter coupon code"
+                    required>
+            </div>
+
+            <!-- Discount Type -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Discount Type
+                </label>
+                <select
+                    name="discount_type"
+                    class="form-select"
+                    required>
+                    <option value="percentage" {% if coupon.discount_type == 'percentage' %}selected{% endif %}>
+                        Percentage
+                    </option>
+                    <option value="fixed" {% if coupon.discount_type == 'fixed' %}selected{% endif %}>
+                        Fixed Amount
+                    </option>
+                </select>
+            </div>
+
+            <!-- Discount Value -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Discount Value
+                </label>
+                <input
+                    type="number"
+                    name="discount_value"
+                    class="form-control"
+                    value="{{ coupon.discount }}"
+                    placeholder="Enter discount value"
+                    required>
+            </div>
+
+            <!-- Usage Limit (Model ထဲမှာရှိရင် သုံးနိုင်ပါတယ်) -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Usage Limit
+                </label>
+                <input
+                    type="number"
+                    name="usage_limit"
+                    class="form-control"
+                    value="{{ coupon.usage_limit|default:'' }}"
+                    placeholder="Enter usage limit">
+            </div>
+
+            <!-- Minimum Purchase (Model ထဲမှာရှိရင် သုံးနိုင်ပါတယ်) -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Minimum Purchase Amount
+                </label>
+                <input
+                    type="number"
+                    name="minimum_purchase"
+                    class="form-control"
+                    value="{{ coupon.minimum_purchase|default:'' }}"
+                    placeholder="Enter minimum purchase amount">
+            </div>
+
+            <!-- Expiry Date -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Expiry Date
+                </label>
+                <input
+                    type="date"
+                    name="expiry_date"
+                    class="form-control"
+                    value="{{ coupon.expiry_date|date:'Y-m-d' }}">
+            </div>
+
+            <!-- Status -->
+            <div class="col-md-6">
+                <label class="form-label">
+                    Status
+                </label>
+                <select
+                    name="status"
+                    class="form-select">
+                    <option value="active" {% if coupon.status == 'active' %}selected{% endif %}>
+                        Active
+                    </option>
+                    <option value="inactive" {% if coupon.status == 'inactive' %}selected{% endif %}>
+                        Inactive
+                    </option>
+                    <option value="expired" {% if coupon.status == 'expired' %}selected{% endif %}>
+                        Expired
+                    </option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="col-12">
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i>
+                    Update Coupon
+                </button>
+
+                <a
+                    href="{% url 'coupons' %}"
+                    class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+{% endblock %}

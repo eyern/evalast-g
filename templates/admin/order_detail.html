@@ -1,0 +1,304 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div>
+        <h3>Order Details</h3>
+        <p>View customer order information</p>
+    </div>
+
+    <a href="{% url 'orders' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Orders
+    </a>
+</div>
+
+
+<!-- Order Information -->
+<div class="product-form-box mb-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h5 class="mb-1">
+                Order ID: #{{ order.id }}
+            </h5>
+
+            <small class="text-muted">
+                Order Date: {{ order.created_at|date:"d M Y, h:i A" }}
+            </small>
+        </div>
+
+
+        <!-- Order Status -->
+        <div>
+            Order Status:
+            {% if order.status == "Pending" %}
+
+                <span class="badge bg-warning text-dark">
+                    Pending
+                </span>
+
+            {% elif order.status == "Processing" %}
+
+                <span class="badge bg-primary">
+                    Processing
+                </span>
+
+            {% elif order.status == "Shipped" %}
+
+                <span class="badge bg-info">
+                    Shipped
+                </span>
+
+            {% elif order.status == "Delivered" %}
+
+                <span class="badge bg-success">
+                    Delivered
+                </span>
+
+            {% elif order.status == "Cancelled" %}
+
+                <span class="badge bg-danger">
+                    Cancelled
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-secondary">
+                    {{ order.status }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Customer Information -->
+    <div class="row g-4">
+
+        <div class="col-md-6">
+
+            <h6 class="fw-bold mb-3">
+                Customer Information
+            </h6>
+
+            <p class="mb-2">
+                <strong>Name:</strong>
+                {{ order.customer.get_full_name|default:order.customer.username }}
+            </p>
+
+            {% if order.customer.email %}
+            <p class="mb-2">
+                <strong>Email:</strong>
+                {{ order.customer.email }}
+            </p>
+            {% endif %}
+
+            {% if order.customer.customer_profile.phone %}
+            <p class="mb-2">
+                <strong>Email:</strong>
+                {{ order.customer.customer_profile.phone }}
+            </p>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Payment Information -->
+        <div class="col-md-6">
+
+            <h6 class="fw-bold mb-3">
+                Payment Information
+            </h6>
+
+            <p class="mb-2">
+                <strong>Payment Status:</strong>
+
+                {% if order.payment_status == "Paid" %}
+
+                    <span class="badge bg-success">
+                        Paid
+                    </span>
+
+                {% elif order.payment_status == "Pending" %}
+
+                    <span class="badge bg-warning text-dark">
+                        Pending
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        Unpaid
+                    </span>
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Ordered Books -->
+<div class="product-table-box mb-4">
+
+    <h5 class="mb-4">
+        Ordered Books
+    </h5>
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    
+                    <th>Book</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for item in order.items.all %}
+
+                <tr>
+
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+
+                            {% if item.book.cover %}
+                                <img
+                                    src="{{ item.book.cover.url }}"
+                                    class="product-image"
+                                    alt="{{ item.book.title }}"
+                                    width="50"
+                                    height="50"
+                                >
+                                {% else %}
+                                <img
+                                    src="{% static 'admin/images/book.png' %}"
+                                    class="product-image"
+                                    alt="Book"
+                                >
+                            {% endif %}
+
+                    </td>
+                    <td>
+                            <strong>
+                                {{ item.book.title }}
+                            </strong><br>
+
+                    </td>
+                    <td>
+                            <small>
+                                {{ item.book.author }}
+                            </small>
+                    </td>
+
+                        </div>
+                    
+
+
+                    <td>
+                        KSh {{ item.price }}
+                    </td>
+
+
+                    <td>
+                        {{ item.quantity }}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            KSh {{ item.subtotal }}
+                        </strong>
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4" class="text-center py-4">
+                        No books found in this order.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- Order Summary -->
+<div class="product-form-box">
+
+    <div class="row justify-content-end">
+
+        <div class="col-md-5">
+
+            <h5 class="mb-4">
+                Order Summary
+            </h5>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal</span>
+                <strong>
+                    KSh {{ order.subtotal }}
+                </strong>
+            </div>
+
+
+            <div class="d-flex justify-content-between mb-2">
+                <span>Shipping</span>
+                <strong>
+                    KSh {{ order.shipping }}
+                </strong>
+            </div>
+
+
+            <hr>
+
+
+            <div class="d-flex justify-content-between">
+                <strong>Total</strong>
+
+                <strong class="fs-5">
+                    KSh {{ order.total }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/my_orders.css' %}">
+{% endblock %}
+
+{% block title %}My Orders - Evalast Motorcycles{% endblock %}
+
+{% block main %}
+
+
+<div class="orders-page">
+
+    <div class="orders-header">
+        <h1>My Orders</h1>
+        <p>View your order history and order details.</p>
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-card-header">
+
+                    <div>
+                        <h2>Order #{{ order.id }}</h2>
+
+                        <p>
+                            {{ order.created_at|date:"M d, Y" }}
+                        </p>
+                    </div>
+
+                    <span class="order-status {{ order.status }}">
+                        {{ order.get_status_display }}
+                    </span>
+
+                </div>
+
+
+                <div class="order-card-body">
+
+                    <div class="order-info">
+                        <span>Total</span>
+
+                        <strong>
+                            KSh {{ order.total_amount|intcomma }}
+                        </strong>
+                    </div>
+
+
+                    <div class="order-info">
+                        <span>Payment</span>
+
+                        <span>
+                            {{ order.get_payment_method_display }}
+                        </span>
+                    </div>
+
+
+                    <div class="order-info">
+                        <span>Payment Status</span>
+
+                        <span class="payment-status {{ order.payment_status }}">
+                            {{ order.get_payment_status_display }}
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="order-card-footer">
+
+                    <a href="{% url 'my_order_detail' order.id %}"
+                       class="view-order-btn">
+                        View Order
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <a href="{% url 'shop' %}" class="shop-btn">
+                Start Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

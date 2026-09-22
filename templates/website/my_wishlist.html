@@ -1,0 +1,155 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    
+    </style>
+{% endblock %}
+
+{% block main %}
+
+
+        
+        
+
+        
+
+        <section class="books-section" id="featured">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">YOUR FAVORITES</span>
+
+                    <h2>My Wishlist</h2>
+
+                    <p>
+                        Books you've saved for later.
+                    </p>
+                </div>
+            </div>
+
+
+        {% if wishlist_items %}
+
+        <div class="books-grid">
+
+            {% for item in wishlist_items %}
+
+            <article class="book-card">
+
+                <div class="book-image">
+
+                    <a href="{% url 'book_detail' item.book.id %}">
+
+                        {% if item.book.cover %}
+
+                            <img
+                                src="{{ item.book.cover.url }}"
+                                alt="{{ item.book.title }}"
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="{% static 'website/images/books/default-book.jpg' %}"
+                                alt="{{ item.book.title }}"
+                            >
+
+                        {% endif %}
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'remove_from_wishlist' item.book.id %}"
+                        class="wishlist-btn wishlist-active"
+                        title="Remove from wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                </div>
+
+
+                <div class="book-info">
+
+                    {% if item.book.category %}
+
+                    <span class="book-category">
+                        {{ item.book.category.name }}
+                    </span>
+
+                    {% endif %}
+
+
+                    <h3>
+
+                        <a href="{% url 'book_detail' item.book.id %}">
+                            {{ item.book.title }}
+                        </a>
+
+                    </h3>
+
+
+                    <p class="book-author">
+                        by {{ item.book.author }}
+                    </p>
+
+
+                    <div class="book-bottom">
+
+                        <div class="book-price">
+
+                            <strong>
+                                KSh {{ item.book.price|intcomma }}
+                            </strong>
+
+                        </div>
+
+
+                        <a
+                            class="cart-btn"
+                            href="{% url 'add_to_cart' item.book.id %}"
+                            title="Add to cart"
+                        >
+                            <i data-lucide="shopping-cart"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+        </section>
+
+        <div class="empty-wishlist">
+
+            <i data-lucide="heart"></i>
+
+            <h2>Your Wishlist is Empty</h2>
+
+            <p>
+                Save your favorite books here and come back to them later.
+            </p>
+
+            <a href="{% url 'shop' %}" class="wishlist-shop-btn">
+                Browse Books
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+
+
+{% endblock %}

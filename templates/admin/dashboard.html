@@ -1,0 +1,392 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'admin/css/dashboard.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- Dashboard Header -->
+
+<div class="dashboard-header">
+
+    <h3>
+        Dashboard
+    </h3>
+
+    <p>
+        Welcome back, Admin
+    </p>
+
+</div>
+
+
+
+<!-- Summary Cards -->
+
+<div class="row g-4">
+
+
+    <!-- Total Orders -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon blue">
+
+                <i class="bi bi-cart-check"></i>
+
+            </div>
+
+
+            <div>
+
+                <h6>
+                    Total Orders
+                </h6>
+
+                <h3>
+                    {{ total_orders }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Total Sales -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon green">
+
+                <i class="bi bi-currency-dollar"></i>
+
+            </div>
+
+
+            <div>
+
+                <h6>
+                    Total Sales
+                </h6>
+
+                <h3>
+                    KSh {{ total_sales }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Customers -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon orange">
+
+                <i class="bi bi-people"></i>
+
+            </div>
+
+
+            <div>
+
+                <h6>
+                    Customers
+                </h6>
+
+                <h3>
+                    {{ total_customers }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Books -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <a
+            href="{% url 'book_lists' %}"
+            class="text-decoration-none"
+        >
+
+            <div class="dashboard-card">
+
+                <div class="card-icon purple">
+
+                    <i class="bi bi-book"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h6>
+                        Total Products
+                    </h6>
+
+                    <h3>
+                        {{ total_books }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- Top Selling Books + Recent Orders -->
+
+<div class="row mt-4 g-4">
+
+
+    <!-- Top Selling Books -->
+
+    <div class="col-lg-5">
+
+        <div class="dashboard-box">
+
+            <h5>
+                Top Selling Products
+            </h5>
+
+
+            <ul class="top-books">
+            {% for book in top_books %}
+            <li>
+                <!-- Book Cover -->
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" class="top-book-cover" alt="{{ book.title }}">
+                {% else %}
+                    <img src="{% static 'admin/images/book-placeholder.webp' %}" class="top-book-cover" alt="Book">
+                {% endif %}
+
+                <!-- Book Info -->
+                <div class="top-book-info">
+                    <h6>{{ book.title }}</h6>
+                    <small>{{ book.author }}</small>
+                </div>
+
+                <!-- Sales -->
+                <div class="top-book-sales">
+                    <strong>{{ book.total_sold }}</strong>
+                    <small>Sold</small>
+                </div>
+            </li>
+            {% empty %}
+            <li>
+                <div style="padding: 15px; text-align: center; width: 100%;">
+                    <small style="color: #888;">No sales data available.</small>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Recent Orders -->
+
+    <div class="col-lg-7">
+
+        <div class="dashboard-box">
+
+            <h5>
+                Recent Orders
+            </h5>
+
+
+            <div class="table-responsive">
+
+                <table class="table dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for order in recent_orders %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ order.id }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if order.customer.profile.full_name %}
+
+                                        {{ order.customer.profile.full_name }}
+
+                                    {% else %}
+
+                                        {{ order.customer.username }}
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+                                    KSh {{ order.total_amount }}
+                                </td>
+
+
+                                <td>
+
+
+                                    {% if order.status == 'pending' %}
+
+                                        <span class="badge bg-warning text-dark">
+
+                                            Pending
+
+                                        </span>
+
+
+                                    {% elif order.status == 'processing' %}
+
+                                        <span class="badge bg-info">
+
+                                            Processing
+
+                                        </span>
+
+
+                                    {% elif order.status == 'shipped' %}
+
+                                        <span class="badge bg-primary">
+
+                                            Shipped
+
+                                        </span>
+
+
+                                    {% elif order.status == 'delivered' %}
+
+                                        <span class="badge bg-success">
+
+                                            Delivered
+
+                                        </span>
+
+
+                                    {% elif order.status == 'cancelled' %}
+
+                                        <span class="badge bg-danger">
+
+                                            Cancelled
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    class="text-center text-muted"
+                                >
+
+                                    No recent orders found.
+
+                                </td>
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

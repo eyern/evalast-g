@@ -1,0 +1,222 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block title %}
+Categories | Evalast Motorcycles
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/pages.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+<main class="categories-page">
+
+
+    <!-- =========================
+         CATEGORY HERO
+    ========================== -->
+
+    <section class="categories-hero">
+
+        <div class="categories-container">
+
+            <div class="categories-hero-content">
+
+                <span class="categories-label">
+                    EXPLORE BY INTEREST
+                </span>
+
+                <h1>
+                    Discover Products by
+                    <span>Category.</span>
+                </h1>
+
+                <p>
+                    Explore our collection and find products that match
+                    your interests, passions and curiosity.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CATEGORY LIST
+    ========================== -->
+
+    <section class="categories-section">
+
+        <div class="categories-container">
+
+
+            <!-- Section Heading -->
+
+            <div class="categories-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        BROWSE COLLECTIONS
+                    </span>
+
+                    <h2>
+                        Find Your Favorite Categories
+                    </h2>
+
+                </div>
+
+
+                <p>
+                    Choose a category and explore products
+                    carefully selected for every shopper.
+                </p>
+
+            </div>
+
+
+
+            <!-- =========================
+                 CATEGORY GRID
+            ========================== -->
+
+            <div class="categories-grid">
+
+
+                {% for category in categories %}
+
+                <a
+                    href="{% url 'category_books' category.id %}"
+                    class="category-card"
+                >
+
+
+                    <!-- Category Icon -->
+
+                    <div class="category-icon">
+
+                        <i data-lucide="book-open"></i>
+
+                    </div>
+
+
+                    <!-- Category Content -->
+
+                    <div class="category-content">
+                        
+                        <span>
+                            CATEGORY
+                        </span>
+
+                        <h3>
+                            {{ category.name }}
+                        </h3>
+
+
+                        <p>
+                            Explore products in this category
+                            and discover something new.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Arrow -->
+
+                    <div class="category-arrow">
+
+                        <i data-lucide="arrow-up-right"></i>
+
+                    </div>
+
+
+                    <!-- Background Number -->
+
+                    <strong class="category-number">
+
+                        {{ forloop.counter|stringformat:"02d" }}
+
+                    </strong>
+
+                </a>
+
+
+                {% empty %}
+
+                <div class="empty-categories">
+
+                    <i data-lucide="folder-open"></i>
+
+                    <h3>
+                        No Categories Found
+                    </h3>
+
+                    <p>
+                        Categories will appear here soon.
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CTA
+    ========================== -->
+
+    <section class="categories-cta">
+
+        <div class="categories-container">
+
+            <div class="categories-cta-box">
+
+                <div>
+
+                    <span>
+                        CAN'T DECIDE WHAT TO BUY?
+                    </span>
+
+                    <h2>
+                        Explore Our Complete Product Collection.
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="#"
+                    class="categories-cta-btn"
+                >
+
+                    Browse All Items
+
+                    <i data-lucide="arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+{% endblock %}

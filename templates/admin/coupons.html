@@ -1,0 +1,239 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Coupons
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h3>Coupons</h3>
+
+        <p>Manage all discount coupons</p>
+
+    </div>
+
+    <a href="{% url 'add_coupon' %}" class="btn btn-primary">
+
+        <i class="bi bi-plus-circle"></i>
+
+        Add Coupon
+
+    </a>
+
+</div>
+
+
+<!-- Search & Filter -->
+
+<div class="product-tools">
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            placeholder="Search coupon...">
+
+        <button type="button">
+
+            <i class="bi bi-search"></i>
+
+        </button>
+
+    </div>
+
+
+    <select class="form-select">
+
+        <option>All Status</option>
+        <option>Active</option>
+        <option>Expired</option>
+        <option>Inactive</option>
+
+    </select>
+
+</div>
+
+
+<!-- Coupons Table -->
+
+<div class="product-table-box">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Coupon Code</th>
+                    <th>Discount</th>
+                    <th>Type</th>
+                    <th>Usage Limit</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for coupon in coupons %}
+
+                <tr>
+
+                    <!-- Number -->
+
+                    <td>
+
+                        {{ forloop.counter }}
+
+                    </td>
+
+
+                    <!-- Coupon Code -->
+
+                    <td>
+
+                        <strong>
+                            {{ coupon.code }}
+                        </strong>
+
+                    </td>
+
+
+                    <!-- Discount -->
+
+                    <td>
+
+                        {% if coupon.discount_type == "percentage" %}
+
+                            {{ coupon.discount }}%
+
+                        {% else %}
+
+                            ${{ coupon.discount }}
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Type -->
+
+                    <td>
+
+                        {{ coupon.discount_type|title }}
+
+                    </td>
+
+
+                    <!-- Usage Limit -->
+
+                    <td>
+
+                        {{ coupon.usage_limit }}
+
+                    </td>
+
+
+                    <!-- Expiry Date -->
+
+                    <td>
+
+                        {{ coupon.expiry_date|date:"d M Y" }}
+
+                    </td>
+
+
+                    <!-- Status -->
+
+                    <td>
+
+                        {% if coupon.status == "active" %}
+
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+
+                        {% elif coupon.status == "expired" %}
+
+                            <span class="badge bg-danger">
+                                Expired
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Action -->
+
+                    <td>
+
+                        <a
+                            href="{% url 'edit_coupon' coupon.id %}"
+                            class="btn btn-sm btn-warning">
+
+                            <i class="bi bi-pencil"></i>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'delete_coupon' coupon.id %}"
+                            class="btn btn-sm btn-danger">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="text-center py-4">
+
+                        No coupons found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

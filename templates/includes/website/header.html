@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+ {% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evalast Motorcycles</title>
+    <link rel="stylesheet" href="{% static 'website/css/header.css' %}">
+</head>
+<body>
+    <header class="site-header">
+
+    <div class="header-container">
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <span class="logo-icon">E</span>
+
+            <div>
+                <strong>Evalast</strong>
+                <small>Future of Urban Commuting.</small>
+            </div>
+        </a>
+
+
+        <!-- Desktop Navigation -->
+        <nav class="main-nav">
+
+            <a href="/" class="active">Home</a>
+
+            <a href="{% url 'about' %}">
+                About Evalast Motorcycles
+            </a>
+
+            <a href="{% url 'shop' %}">
+                Shop
+            </a>
+
+            <a href="{% url 'category' %}">
+                Categories
+            </a>
+
+            <a href="{% url 'my_orders' %}">
+                My Orders
+            </a>
+
+            
+
+        </nav>
+
+
+        <!-- Actions -->
+        <div class="header-actions">
+
+            <!-- Search -->
+            <button
+                type="button"
+                class="icon-btn"
+                id="searchToggle"
+                aria-label="Search"
+            >
+                <i data-lucide="search"></i>
+            </button>
+
+
+            <!-- Wishlist -->
+            <a href="{% url 'my_wishlist' %}" class="icon-btn">
+                <i data-lucide="heart"></i>
+                {% if wishlist_count > 0 %}
+                    <span class="cart-badge">
+                        {{ wishlist_count }}
+                    </span>
+                {% endif %}
+            </a>
+
+
+            <!-- Cart -->
+            <a href="{% url 'cart' %}" class="icon-btn cart">
+
+                <i data-lucide="shopping-cart"></i>
+
+                {% if cart_count > 0 %}
+                    <span class="cart-badge">{{ cart_count }}</span>
+                {% endif %}
+
+            </a>
+
+            <!-- Account -->
+            {% if user.is_authenticated %}
+
+                {% if user.is_staff %}
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="account-btn"
+                    >
+                        Admin Dashboard
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'profile' %}"
+                        class="account-btn"
+                    >
+
+                        <i data-lucide="user"></i>
+
+                        <span>Profile</span>
+
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="account-btn"
+                >
+
+                    <i data-lucide="user"></i>
+
+                    <span>Account</span>
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Mobile Menu Button -->
+        <button
+            class="menu-btn"
+            id="menuToggle"
+            type="button"
+            aria-label="Open menu"
+        >
+            <i data-lucide="menu"></i>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     Search Panel
+========================= -->
+
+<div class="search-panel" id="searchPanel">
+
+    <form
+        action="{% url 'search' %}"
+        method="GET"
+        class="search-form"
+    >
+
+        <input
+            type="text"
+            name="q"
+            placeholder="Search products..."
+            autocomplete="off"
+        >
+
+        <button type="submit">
+            <i data-lucide="search"></i>
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================
+     Mobile Overlay
+========================= -->
+
+<div
+    class="mobile-overlay"
+    id="mobileOverlay"
+></div>
+
+
+<!-- =========================
+     Mobile Menu
+========================= -->
+
+<aside
+    class="mobile-menu"
+    id="mobileMenu"
+>
+
+    <div class="mobile-menu-header">
+
+        <strong>Evalast</strong>
+
+        <button
+            type="button"
+            id="menuClose"
+            aria-label="Close menu"
+        >
+            <i data-lucide="x"></i>
+        </button>
+
+    </div>
+
+
+    <nav class="mobile-nav">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="{% url 'shop' %}">
+            Shop
+        </a>
+
+        <a href="{% url 'category' %}">
+            Categories
+        </a>
+
+        <a href="{% url 'my_orders' %}">
+            My Orders
+        </a>
+
+        <a href="{% url 'about' %}">
+            About
+        </a>
+
+    </nav>
+
+
+    <div class="mobile-menu-actions">
+
+        <a href="{% url 'cart' %}">
+            <i data-lucide="shopping-cart"></i>
+            Cart
+        </a>
+
+
+        {% if user.is_authenticated %}
+
+            {% if user.is_staff %}
+
+                <a href="{% url 'dashboard' %}">
+                    <i data-lucide="layout-dashboard"></i>
+                    Admin Dashboard
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'profile' %}">
+                    <i data-lucide="user"></i>
+                    Profile
+                </a>
+
+            {% endif %}
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                <i data-lucide="user"></i>
+                Account
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</aside>
+
+
+<script>
+
+    /* =========================
+       Mobile Menu
+    ========================= */
+
+    const menuToggle = document.getElementById("menuToggle");
+    const menuClose = document.getElementById("menuClose");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+
+
+    function openMenu() {
+
+        mobileMenu.classList.add("show");
+        mobileOverlay.classList.add("show");
+
+        document.body.classList.add("menu-open");
+
+    }
+
+
+    function closeMenu() {
+
+        mobileMenu.classList.remove("show");
+        mobileOverlay.classList.remove("show");
+
+        document.body.classList.remove("menu-open");
+
+    }
+
+
+    menuToggle.addEventListener(
+        "click",
+        openMenu
+    );
+
+
+    menuClose.addEventListener(
+        "click",
+        closeMenu
+    );
+
+
+    mobileOverlay.addEventListener(
+        "click",
+        closeMenu
+    );
+
+
+    /* =========================
+       Search
+    ========================= */
+
+    const searchToggle =
+        document.getElementById("searchToggle");
+
+    const searchPanel =
+        document.getElementById("searchPanel");
+
+
+    searchToggle.addEventListener(
+        "click",
+        function () {
+
+            searchPanel.classList.toggle("show");
+
+            if (searchPanel.classList.contains("show")) {
+
+                searchPanel
+                    .querySelector("input")
+                    .focus();
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       Lucide Icons
+    ========================= */
+
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
+
+</script>
+</body>
+</html>

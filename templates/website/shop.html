@@ -1,0 +1,548 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Shop | Evalast Motorcycles{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/pages.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+<main class="shop-page">
+
+    <!-- SHOP HERO -->
+
+    <section class="shop-hero">
+
+        <div class="shop-container">
+
+            <div class="shop-hero-content">
+
+                <span class="shop-label">
+                    OUR PRODUCTS COLLECTION
+                </span>
+
+                <h1>
+                    Future of
+                    <span>Urban Commuting.</span>
+                </h1>
+
+                <p>
+                    Explore thousands of products, accessories and motorcycles
+                    waiting to become part of your next chapter.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    
+    <section class="shop-section">
+
+        <div class="shop-container">
+
+
+            <!-- TOP BAR -->
+
+            <div class="shop-topbar">
+
+                <div class="shop-heading">
+
+                    <span>EXPLORE</span>
+
+                    <h2>All Products</h2>
+
+                </div>
+
+
+                <!-- Search -->
+
+                <form class="shop-search" method="GET" action="{% url 'shop' %}">
+
+    <i data-lucide="search"></i>
+
+    <input
+        type="text"
+        name="q"
+        placeholder="search motorcycles,spares..."
+        value="{{ search_query }}"
+    >
+
+    {% if selected_category %}
+        <input type="hidden" name="category" value="{{ selected_category }}">
+    {% endif %}
+    {% if max_price %}
+        <input type="hidden" name="max_price" value="{{ max_price }}">
+    {% endif %}
+    {% if availability %}
+        <input type="hidden" name="availability" value="{{ availability }}">
+    {% endif %}
+    {% if rating %}
+        <input type="hidden" name="rating" value="{{ rating }}">
+    {% endif %}
+    {% if selected_sort %}
+        <input type="hidden" name="sort" value="{{ selected_sort }}">
+    {% endif %}
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+
+                <!-- Sort -->
+
+                <form class="shop-sort" method="GET" action="{% url 'shop' %}">
+
+                    <i data-lucide="arrow-up-down"></i>
+
+                    {% if search_query %}
+                        <input type="hidden" name="q" value="{{ search_query }}">
+                    {% endif %}
+                    {% if selected_category %}
+                        <input type="hidden" name="category" value="{{ selected_category }}">
+                    {% endif %}
+                    {% if max_price %}
+                        <input type="hidden" name="max_price" value="{{ max_price }}">
+                    {% endif %}
+                    {% if availability %}
+                        <input type="hidden" name="availability" value="{{ availability }}">
+                    {% endif %}
+                    {% if rating %}
+                        <input type="hidden" name="rating" value="{{ rating }}">
+                    {% endif %}
+
+                    <select name="sort" onchange="this.form.submit()">
+
+                        <option value="">Sort by</option>
+
+                        <option value="newest"
+                            {% if selected_sort == 'newest' %}selected{% endif %}>
+                            Newest
+                        </option>
+
+                        <option value="oldest"
+                            {% if selected_sort == 'oldest' %}selected{% endif %}>
+                            Oldest
+                        </option>
+
+                        <option value="price_low"
+                            {% if selected_sort == 'price_low' %}selected{% endif %}>
+                            Price: Low to High
+                        </option>
+
+                        <option value="price_high"
+                            {% if selected_sort == 'price_high' %}selected{% endif %}>
+                            Price: High to Low
+                        </option>
+
+                    </select>
+
+                </form>
+            </div>
+
+
+            <!-- shop layout -->
+
+            <div class="shop-layout">
+
+
+                <!-- sidebar -->
+
+                <aside class="shop-sidebar">
+
+                    <form method="GET" action="{% url 'shop' %}">
+                    <div class="filter-title">
+
+                        <h3>Filters</h3>
+
+                        <a href="{% url 'shop' %}" class="clear-filter">
+                            Clear
+                        </a>
+
+                    </div>
+
+
+                    <!-- Categories -->
+
+                    <div class="filter-group">
+                        <div class="filter-title">
+                            <span>Categories</span>
+                        </div>
+
+                        <div class="filter-options">
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value=""
+                                    {% if not selected_category %}checked{% endif %}
+                                >
+                                <span>All Products</span>
+                            </label>
+
+                            {% for category in categories %}
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="{{ category.id }}"
+                                    {% if selected_category == category.id|stringformat:"s" %}checked{% endif %}
+                                >
+                                <span>{{ category.name }}</span>
+                            </label>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                    
+
+    <!-- category filter  -->
+
+                    <div class="filter-group">
+
+                        <div class="filter-group-title">
+                            <h4>Price Range</h4>
+                            <i data-lucide="chevron-up"></i>
+                        </div>
+
+                        <div class="price-values">
+                            <span>0 KSh</span>
+                            <span>KSh {{ max_price|default:price_max|intcomma }}</span>
+                        </div>
+
+                        <input
+                            type="range"
+                            min="0"
+                            max="{{ price_max }}"
+                            value="{{ max_price|default:price_max }}"
+                            name="max_price"
+                            class="price-slider"
+                            
+                        >
+
+                    </div>
+                                    
+
+                    <!-- Availability -->
+
+                    <div class="filter-group">
+
+                        <div class="filter-group-title">
+
+                            <h4>Availability</h4>
+
+                            <i data-lucide="chevron-up"></i>
+
+                        </div>
+
+
+                        <label class="filter-option">
+
+                            <input
+                                type="checkbox"
+                                name="availability"
+                                value="in_stock"
+                                {% if availability == 'in_stock' %}checked{% endif %}
+                            >
+
+                            <span>In Stock</span>
+
+                        </label>
+
+                        <label class="filter-option">
+
+                            <input
+                                type="checkbox"
+                                name="availability"
+                                value="pre_order"
+                                {% if availability == 'pre_order' %}checked{% endif %}
+                            >
+
+                            <span>Pre Order</span>
+
+                        </label>
+
+
+                        
+
+                    </div>
+
+
+                    <!-- Rating -->
+
+                    <div class="filter-group">
+
+    <div class="filter-group-title">
+        <h4>Rating</h4>
+        <i data-lucide="chevron-up"></i>
+    </div>
+
+
+    <label class="filter-option rating-filter">
+
+        <input
+            type="radio"
+            name="rating"
+            value="5"
+            {% if rating == '5' %}checked{% endif %}
+        >
+
+        <span class="mini-stars">
+
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+
+            <small>& up</small>
+
+        </span>
+
+    </label>
+
+
+    <label class="filter-option rating-filter">
+
+        <input
+            type="radio"
+            name="rating"
+            value="4"
+            {% if rating == '4' %}checked{% endif %}
+        >
+
+        <span class="mini-stars">
+
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+
+            <small>& up</small>
+
+        </span>
+
+    </label>
+
+</div>
+
+
+                    <button class="apply-filter">
+
+                        Apply Filters
+
+                    </button>
+
+                    </form>
+
+                </aside>
+
+
+                <!-- PRODUCT -->
+
+                <div class="shop-products">
+
+
+                    <!-- Mobile filter -->
+
+                    <button class="mobile-filter">
+
+                        <i data-lucide="sliders-horizontal"></i>
+
+                        Filters
+
+                    </button>
+
+
+                    <!-- Product Header -->
+
+                    <div class="products-header">
+
+                        <p>
+                            Showing
+                            <strong>{{ page_obj.paginator.count }}</strong>
+                            products
+                        </p>
+
+                    </div>
+
+
+                    <!-- BOOK GRID -->
+
+                <div class="shop-book-grid">
+
+                    {% for book in books %}
+
+                    <article class="shop-book-card">
+
+                        <div class="shop-book-cover">
+
+                            <a href="{% url 'book_detail' book.id %}">
+
+                            {% if book.cover %}
+                                <img
+                                    src="{{ book.cover.url }}"
+                                    alt="{{ book.title }}"
+                                >
+                            {% else %}
+                                <img
+                                    src="{% static 'website/images/book-placeholder.jpg' %}"
+                                    alt="Book cover"
+                                >
+                            {% endif %}
+
+                            </a>
+
+                            {% if book.id in wishlist_book_ids %}
+
+                                <a
+                                    href="{% url 'remove_from_wishlist' book.id %}"
+                                    class="book-wishlist wishlist-active"
+                                    aria-label="Remove from wishlist"
+                                >
+                                    <i data-lucide="heart"></i>
+                                </a>
+
+                            {% else %}
+
+                                <a
+                                    href="{% url 'add_to_wishlist' book.id %}"
+                                    class="book-wishlist"
+                                    aria-label="Add to wishlist"
+                                >
+                                    <i data-lucide="heart"></i>
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="shop-book-info">
+
+                            <span class="book-category">
+                                {{ book.category.name }}
+                            </span>
+
+                            <h3>
+                                <a href="{% url 'book_detail' book.id %}">
+                                    {{ book.title }}
+                                </a>
+                            </h3>
+
+                            <p class="book-author">
+                                {{ book.author }}
+                            </p>
+
+
+                            <div class="book-rating">
+
+                                <span class="stars">
+                                    <i data-lucide="star"></i>
+                                    <i data-lucide="star"></i>
+                                    <i data-lucide="star"></i>
+                                    <i data-lucide="star"></i>
+                                    <i data-lucide="star"></i>
+                                </span>
+
+                                <small>
+                                    {% if book.average_rating %}
+                                        {{ book.average_rating|floatformat:1 }}
+                                    {% else %}
+                                        0.0
+                                    {% endif %}
+                                </small>
+
+                            </div>
+
+
+                            <div class="shop-book-bottom">
+
+                                <strong>
+                                    KSh  {{ book.price|floatformat:0|intcomma }} 
+                                </strong>
+
+                                <a
+                                    href="{% url 'book_detail' book.id %}"
+                                    class="book-detail-btn"
+                                >
+                                    <i data-lucide="arrow-up-right"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                    {% empty %}
+
+                        <p>No products found.</p>
+
+                    {% endfor %}
+
+                </div>
+
+
+                    <!-- PAGINATION -->
+
+                    <div class="shop-pagination">
+
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if availability %}&availability={{ availability }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}">
+                                <i data-lucide="chevron-left"></i>
+                            </a>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+
+                            {% if page_obj.number == num %}
+
+                                <a
+                                    href="?page={{ num }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if availability %}&availability={{ availability }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}"
+                                    class="active"
+                                >
+                                    {{ num }}
+                                </a>
+
+                            {% else %}
+
+                                <a
+                                    href="?page={{ num }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if availability %}&availability={{ availability }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}"
+                                >
+                                    {{ num }}
+                                </a>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if availability %}&availability={{ availability }}{% endif %}{% if rating %}&rating={{ rating }}{% endif %}">
+                                <i data-lucide="chevron-right"></i>
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

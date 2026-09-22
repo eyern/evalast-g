@@ -1,0 +1,241 @@
+{% extends 'admin/base.html' %} {% load static %} {% block title %} Add Product
+{%endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="page-header">
+  <div>
+    <h3>Add Product</h3>
+    <p>Add a new product to store</p>
+  </div>
+
+  <a href="{% url 'book_lists' %}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i>
+    Back
+  </a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h5>Product Information</h5>
+  </div>
+
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row g-4">
+        <!-- Book Cover -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Product Image </label>
+
+          <input type="file" name="cover" class="form-control" accept="image/*" />
+        </div>
+
+        <!-- Book Title -->
+
+        <div class="col-md-6">
+          <label class="form-label">Product Title </label>
+
+          <input
+            type="text"
+            name="title"
+            class="form-control"
+            placeholder="Enter product title"
+          />
+        </div>
+
+        <!-- Author -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Brand </label>
+
+          <input
+            type="text"
+            name="author"
+            class="form-control"
+            placeholder="Enter brand name"
+          />
+        </div>
+
+        <!-- Category -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Category </label>
+
+          <select name="category" class="form-select" required>
+            <option value="" selected disabled>Select Category</option>
+
+            {% for category in categories %}
+
+            <option value="{{ category.id }}">{{ category.name }}</option>
+
+            {% empty %}
+
+            <option value="" disabled>No categories available</option>
+
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- ISBN -->
+
+        <div class="col-md-6">
+          <label class="form-label"> SKU </label>
+
+          <input
+            type="text"
+            name="isbn"
+            class="form-control"
+            placeholder="Enter frame no"
+          />
+        </div>
+
+        <!-- Publisher -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Courier Company </label>
+
+          <input
+            type="text"
+            name="publisher"
+            class="form-control"
+            placeholder="Enter courier company"
+          />
+        </div>
+
+        <!-- Published Date -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Published Date </label>
+
+          <input type="date" name="publisher_date" class="form-control" />
+        </div>
+
+        <!-- Language -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Shipped By </label>
+
+          <select name="language" class="form-select">
+            <option selected>Garage Zero - Thika</option>
+
+            <option>Garage Zero - Embu</option>
+
+            <option>Garage Zero - Eldoret</option>
+          </select>
+        </div>
+
+        <!-- Format -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Showroom </label>
+
+          <select name="format" class="form-select">
+            <option selected>Select Showroom</option>
+
+            <option value="Paperback">Thika </option>
+
+            <option value="Hardcover">Embu</option>
+
+            <option value="EPUB">Eldoret</option>
+
+            <option value="PDF">All showrooms</option>
+          </select>
+        </div>
+
+        <!-- Price -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Price </label>
+
+          <input
+            type="number"
+            name="price"
+            class="form-control"
+            placeholder="Enter price" required
+            step="1" min="0"
+          />
+        </div>
+
+        <!-- Stock -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Stock </label>
+
+          <input
+            type="number"
+            name="stock"
+            class="form-control"
+            placeholder="Enter stock quantity"
+          />
+        </div>
+
+        <!-- Status -->
+
+        <div class="col-md-6">
+          <label class="form-label"> Status </label>
+
+          <select name="status" class="form-select">
+            <option value="active" selected>Active</option>
+
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <!-- Home section -->
+        <div class="form-group">
+          <label class="form-label"> Home Page </label>
+
+          <div>
+            <label>
+              <input type="checkbox" name="show_on_home" />
+
+              Show this product on Home Page
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label"> Home Section </label>
+
+          <select name="home_section" class="form-select">
+            <option value="none">None</option>
+
+            <option value="featured">Featured</option>
+
+            <option value="best_seller">Best Seller</option>
+
+            <option value="new_arrival">New Arrival</option>
+          </select>
+        </div>
+        <!-- Description -->
+
+        <div class="col-12">
+          <label class="form-label"> Description </label>
+
+          <textarea
+            class="form-control"
+            name="description"
+            rows="5"
+            placeholder="Enter product description"
+          ></textarea>
+        </div>
+
+        <!-- Buttons -->
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle"></i>
+            Add Product
+          </button>
+
+          <a href="#" class="btn btn-secondary"> Cancel </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

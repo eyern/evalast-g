@@ -1,0 +1,122 @@
+{% load static %}
+
+<nav class="admin-navbar">
+
+    <!-- Left Side -->
+    <div class="navbar-left">
+
+        <!-- Mobile / Tablet Sidebar Toggle -->
+        <button
+            type="button"
+            class="sidebar-toggle"
+            aria-label="Toggle sidebar"
+        >
+            <i class="bi bi-list"></i>
+        </button>
+
+
+        <h4>
+            Dashboard
+        </h4>
+
+    </div>
+
+
+    <!-- Right Side -->
+    <div class="navbar-right">
+
+
+        <!-- Search -->
+        <!-- <div class="search-box navbar-search">
+
+            <input
+                type="text"
+                placeholder="Search..."
+            >
+
+            <button
+                type="button"
+            >
+                <i class="bi bi-search"></i>
+            </button>
+
+        </div>
+ -->
+
+        <!-- Notification -->
+        <!-- <div class="notification">
+
+            <a href="#">
+
+                <i class="bi bi-bell"></i>
+
+                <span>
+                    3
+                </span>
+
+            </a>
+
+        </div> -->
+
+
+        <!-- Profile -->
+        <div class="admin-profile dropdown">
+
+
+            <a
+                href="#"
+                class="dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+            >
+
+                <!-- <img
+                    src="{% static 'admin/images/admin.png' %}"
+                    alt="Admin"
+                > -->
+
+
+                <span class="admin-name">Owner : 
+                    {{ request.user.username}}
+                </span>
+
+            </a>
+
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+
+                <li>
+
+                    <hr class="dropdown-divider">
+
+                </li>
+
+
+                <li>
+
+                    <a
+                        class="dropdown-item text-danger"
+                        href="{% url 'admin_logout' %}"
+                    >
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        Logout
+
+                    </a>
+
+                </li>
+
+            
+
+
+            </ul>
+
+
+        </div>
+
+
+    </div>
+
+</nav>

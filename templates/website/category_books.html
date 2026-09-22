@@ -1,0 +1,159 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/home.css' %}">
+{% endblock %}
+{% load humanize %}
+{% block title %}
+Evalast Motorcycles
+{% endblock %}
+
+{% block main %}
+
+<section class="hero">
+    <div>
+        <h1>{{ selected_category.name }}</h1>
+        <p>Future of Urban Commuting.</p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="books-section" id="featured">
+<div class="books-grid">
+
+        {% for book in books %}
+
+        
+        <article class="book-card">
+
+            <div class="book-image">
+
+                <a href="{% url 'book_detail' book.id %}">
+
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                    {% else %}
+                        <img src="{% static 'website/images/books/default-book.jpg' %}" alt="{{ product.name }}">
+                    {% endif %}
+
+                </a>
+
+                {% if book.id in wishlist_book_ids %}
+
+                    <a
+                        href="{% url 'remove_from_wishlist' book.id %}"
+                        class="wishlist-btn wishlist-active"
+                        title="Remove from wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'add_to_wishlist' book.id %}"
+                        class="wishlist-btn"
+                        title="Add to wishlist"
+                    >
+                        <i data-lucide="heart"></i>
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    {{ book.category.name }}
+                </span>
+
+                <h3>
+                    <a href="{% url 'book_detail' book.id %}">
+                        {{ book.title }}
+                    </a>
+                </h3>
+
+                <p class="book-author">
+                    {{ book.author }}
+                </p>
+
+
+                <div class="book-rating">
+
+                    <span class="stars">
+                        <i data-lucide="star"></i>  
+                        <i data-lucide="star"></i>  
+                        <i data-lucide="star"></i>  
+                        <i data-lucide="star"></i>  
+                        <i data-lucide="star"></i>  
+                    </span>
+
+                    <span>
+                        ({{ product.review_count|default:"0" }})
+                    </span>
+
+                </div>
+
+
+                <div class="book-bottom">
+
+                    <div class="book-price">
+
+                        <strong>
+                            KSh {{ book.price|intcomma }}
+                        </strong>
+
+                    </div>
+
+                    <a class="cart-btn" href="{% url 'add_to_cart' book.id %}">
+                        <i data-lucide="shopping-cart"></i>  
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        </a>
+
+        {% empty %}
+
+        
+
+        <!-- Temporary demo cards -->
+
+        <article class="book-card">
+            <div class="book-image">
+                <img src="{% static 'website/images/books/book-1.jpg' %}" alt="Book">
+                <button class="wishlist-btn">♡</button>
+            </div>
+
+            <div class="book-info">
+                <span class="book-category">Fiction</span>
+                <h3>The Midnight Library</h3>
+                <p class="book-author">by Matt Haig</p>
+
+                <div class="book-rating">
+                    <span class="stars">★★★★★</span>
+                    <span>(128)</span>
+                </div>
+
+                <div class="book-bottom">
+                    <div class="book-price">
+                        <strong>$18.99</strong>
+                    </div>
+                    <button class="cart-btn">🛒</button>
+                </div>
+            </div>
+        </article>
+
+
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}

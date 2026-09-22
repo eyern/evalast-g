@@ -1,0 +1,113 @@
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/login.css' %}" />
+{% endblock %} {% block main %}
+
+<div class="auth-page">
+  {% include 'includes/website/message.html' %}
+  <div class="auth-container" id="container">
+    <!-- ================= REGISTER ================= -->
+
+    <div class="form-container sign-up">
+      <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <h1>Create Account</h1>
+
+        <p class="auth-subtitle">
+          Your ride awaits! Join Evalast Motorcycles today!
+        </p>
+
+        <!-- Messages -->
+
+        <input type="text" name="name" placeholder="Full name" required />
+
+        <input type="email" name="email" placeholder="Email address" required />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+
+        <input
+          type="password"
+          name="confirm_password"
+          placeholder="Confirm password"
+          required
+        />
+
+        <button type="submit">Create Account</button>
+      </form>
+    </div>
+
+    <!-- ================= LOGIN ================= -->
+
+    <div class="form-container sign-in">
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-subtitle">Sign in and continue exploring our products & motorcycles.</p>
+
+        <!-- Messages -->
+
+        <input type="email" name="email" placeholder="Email Address" required />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+
+    <!-- ================= TOGGLE ================= -->
+
+    <div class="toggle-container">
+      <div class="toggle">
+        <!-- LEFT -->
+
+        <div class="toggle-panel toggle-left">
+          <span class="auth-label"> WELCOME BACK </span>
+
+          <h1>Continue Your Riding Journey</h1>
+
+          <p>
+            Sign in to access your account, wishlist and continue shopping
+            products you love.
+          </p>
+
+          <button class="hidden" id="login" type="button">Sign In</button>
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="toggle-panel toggle-right">
+          <span class="auth-label"> JOIN EVALAST MOTORCYCLES </span>
+
+          <h1>Find Your Next Favorite Ride today!</h1>
+
+          <p>
+            Create an account and explore thousands of products waiting for you.
+          </p>
+
+          <button class="hidden" id="register" type="button">
+            Create Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block extra_js %}
+
+<script src="{% static 'website/js/login.js' %}"></script>
+
+{% endblock %}

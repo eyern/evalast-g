@@ -1,0 +1,295 @@
+{% extends 'website/base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+
+{% block title %}
+Featured | EVALAST MOTORCYCLES
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/pages.css' %}">
+{% endblock %}
+
+
+{% block main %}
+
+<main class="categories-page">
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="categories-hero">
+
+        <div class="categories-container">
+
+            <div class="categories-hero-content">
+
+                <span class="categories-label">
+                    Curated just for you
+                </span>
+
+                <h1>
+                    Products 
+                    <span>Most Loved.</span>
+                </h1>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURED BOOKS
+    ========================== -->
+
+    <section class="best-sellers-section">
+
+        <div class="shop-container">
+
+
+            <!-- Heading -->
+
+            <div class="best-sellers-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        MOST POPULAR
+                    </span>
+
+                    <h2>
+                        Our Featured
+                    </h2>
+
+                </div>
+
+
+                <span class="book-count">
+                    {{ books|length }} Products
+                </span>
+
+            </div>
+
+
+            <!-- Books Grid -->
+
+            <div class="books-grid">
+
+
+                {% for book in books %}
+
+
+                <!-- =========================
+                     BOOK CARD
+                ========================== -->
+
+                <article class="book-card">
+
+
+                    <!-- Book Image -->
+
+                    <div class="book-image">
+
+                        <a href="{% url 'book_detail' book.id %}">
+
+                            {% if book.cover %}
+
+                                <img
+                                    src="{{ book.cover.url }}"
+                                    alt="{{ book.title }}"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{% static 'website/images/books/default-book.jpg' %}"
+                                    alt="{{ book.title }}"
+                                >
+
+                            {% endif %}
+
+                        </a>
+
+
+                        <!-- Wishlist -->
+
+                        {% if book.id in wishlist_book_ids %}
+
+                            <a
+                                href="{% url 'remove_from_wishlist' book.id %}"
+                                class="wishlist-btn wishlist-active"
+                                title="Remove from wishlist"
+                            >
+
+                                <i data-lucide="heart"></i>
+
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'add_to_wishlist' book.id %}"
+                                class="wishlist-btn"
+                                title="Add to wishlist"
+                            >
+
+                                <i data-lucide="heart"></i>
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Book Information -->
+
+                    <div class="book-info">
+
+
+                        <!-- Category -->
+
+                        {% if book.category %}
+
+                            <span class="book-category">
+                                {{ book.category.name }}
+                            </span>
+
+                        {% endif %}
+
+
+                        <!-- Title -->
+
+                        <h3>
+
+                            <a href="{% url 'book_detail' book.id %}">
+                                {{ book.title }}
+                            </a>
+
+                        </h3>
+
+
+                        <!-- Author -->
+
+                        <p class="book-author">
+                            {{ book.author }}
+                        </p>
+
+
+                        <!-- Rating -->
+
+                        <div class="bd-rating">
+
+
+                            <div class="bd-stars">
+
+                                {% for i in "12345" %}
+
+                                    {% if book.average_rating and forloop.counter <= book.average_rating %}
+
+                                        <i data-lucide="star"></i>
+
+                                    {% else %}
+
+                                        <i
+                                            data-lucide="star"
+                                            class="empty-star"
+                                        ></i>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <span>
+
+                                {{ book.average_rating|default:"0"|floatformat:1 }}
+
+                                ({{ book.review_count|default:"0" }} Reviews)
+
+                            </span>
+
+
+                        </div>
+
+
+                        <!-- Price + Cart -->
+
+                        <div class="book-bottom">
+
+
+                            <div class="book-price">
+
+                                <strong>
+                                    KSh {{ book.price|intcomma }}
+                                </strong>
+
+                            </div>
+
+
+                            <a
+                                class="cart-btn"
+                                href="{% url 'add_to_cart' book.id %}"
+                                title="Add to cart"
+                            >
+
+                                <i data-lucide="shopping-cart"></i>
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </article>
+
+
+                {% empty %}
+
+
+                <!-- =========================
+                     EMPTY STATE
+                ========================== -->
+
+                <div class="empty-books">
+
+                    <i data-lucide="book-open"></i>
+
+                    <h3>
+                        No Featured Books Yet
+                    </h3>
+
+                    <p>
+                        Check back soon for our featured books.
+                    </p>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+{% endblock %}

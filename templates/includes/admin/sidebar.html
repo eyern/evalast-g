@@ -1,0 +1,171 @@
+{% load static %}
+
+<aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-logo">
+
+        <a href="{% url 'dashboard' %}">
+
+            <h3>
+                Garage Zero
+            </h3>
+
+        </a>
+
+    </div>
+
+
+    <!-- Menu -->
+    <ul class="sidebar-menu">
+
+
+        <!-- Dashboard -->
+        <li>
+
+            <a href="{% url 'dashboard' %}">
+
+                <i class="bi bi-speedometer2"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Books -->
+        <li>
+
+            <a href="{% url 'book_lists' %}">
+
+                <i class="bi bi-book"></i>
+
+                <span>
+                    Products
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Categories -->
+        <li>
+
+            <a href="{% url 'categories' %}">
+
+                <i class="bi bi-tags"></i>
+
+                <span>
+                    Categories
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Orders -->
+        <li>
+
+            <a href="{% url 'orders' %}">
+
+                <i class="bi bi-cart-check"></i>
+
+                <span>
+                    Orders
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Customers -->
+        <li>
+
+            <a href="{% url 'customers' %}">
+
+                <i class="bi bi-people"></i>
+
+                <span>
+                    Customers
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Reviews -->
+        <li>
+
+            <a href="{% url 'reviews' %}">
+
+                <i class="bi bi-star"></i>
+
+                <span>
+                    Reviews
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Coupons -->
+        <li>
+
+            <a href="{% url 'coupons' %}">
+
+                <i class="bi bi-ticket-perforated"></i>
+
+                <span>
+                    Coupons
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Reports -->
+        <li>
+
+            <a href="{% url 'reports' %}">
+
+                <i class="bi bi-bar-chart"></i>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+
+        </li>
+
+
+        
+
+        <!-- Logout -->
+        <li class="logout">
+
+            <a href="{% url 'index' %}">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                <span>
+                    Back to Website
+                </span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+</aside>

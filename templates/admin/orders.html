@@ -1,0 +1,252 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Orders{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h3>Orders</h3>
+        <p>Manage customer orders</p>
+    </div>
+</div>
+
+
+<!-- Search & Filter -->
+<div class="product-tools">
+
+    <form method="GET" style="display:flex; gap:15px; width:100%;">
+
+        <div class="search-box">
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search Order ID..."
+            >
+
+            <button type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+
+        <select
+            name="status"
+            class="form-select"
+            onchange="this.form.submit()"
+        >
+
+            <option value="">All Status</option>
+
+            <option value="pending"
+                {% if selected_status == "pending" %}selected{% endif %}>
+                Pending
+            </option>
+
+            <option value="processing"
+                {% if selected_status == "processing" %}selected{% endif %}>
+                Processing
+            </option>
+
+            <option value="shipped"
+                {% if selected_status == "shipped" %}selected{% endif %}>
+                Shipped
+            </option>
+
+            <option value="delivered"
+                {% if selected_status == "delivered" %}selected{% endif %}>
+                Delivered
+            </option>
+
+            <option value="cancelled"
+                {% if selected_status == "cancelled" %}selected{% endif %}>
+                Cancelled
+            </option>
+
+        </select>
+
+    </form>
+
+</div>
+
+
+<!-- Orders Table -->
+<div class="product-table-box">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                {% for order in orders %}
+
+                <tr>
+
+                    <!-- Order ID -->
+                    <td>
+                        #{{ order.id }}
+                    </td>
+
+
+                    <!-- Customer -->
+                    <td>
+                        {{ order.customer }}
+                    </td>
+
+
+                    <!-- Total -->
+                    <td>
+                        KSh {{ order.total_amount|intcomma }}
+                    </td>
+
+
+                    <!-- Payment -->
+                    <td>
+
+                        {% if order.payment_status == "paid" %}
+
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+
+                        {% elif order.payment_status == "pending" %}
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        {% elif order.payment_status == "failed" %}
+
+                            <span class="badge bg-danger">
+                                Failed
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                {{ order.payment_status }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Status -->
+                    <td>
+
+                        {% if order.status == "pending" %}
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        {% elif order.status == "processing" %}
+
+                            <span class="badge bg-primary">
+                                Processing
+                            </span>
+
+                        {% elif order.status == "shipped" %}
+
+                            <span class="badge bg-info">
+                                Shipped
+                            </span>
+
+                        {% elif order.status == "delivered" %}
+
+                            <span class="badge bg-success">
+                                Delivered
+                            </span>
+
+                        {% elif order.status == "cancelled" %}
+
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                {{ order.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- Date -->
+                    <td>
+                        {{ order.created_at|date:"d M Y" }}
+                    </td>
+
+
+                    <!-- Action -->
+                    <td>
+
+                        <a
+                            href="/order_detail/{{ order.id }}/"
+                            class="btn btn-sm btn-primary"
+                        >
+                            <i class="bi bi-eye"></i>
+                        </a>
+
+                        <a
+                            href="{% url 'update_order' order.id %}"
+                            class="btn btn-sm btn-warning"
+                        >
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="7" class="text-center py-5">
+
+                        <i class="bi bi-bag-x fs-1 text-secondary"></i>
+
+                        <p class="mt-2 mb-0">
+                            No orders found.
+                        </p>
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

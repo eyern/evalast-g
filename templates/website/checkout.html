@@ -1,0 +1,450 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/checkout.css' %}">
+{% endblock %}
+
+{% block title %}
+    Checkout - Evalast Motorcycles
+{% endblock %}
+
+{% block main %}
+
+<div class="checkout-container">
+
+    <!-- Page Header -->
+    <div class="checkout-header">
+        <h1>Checkout</h1>
+        <p>Complete your order and get your items shipped.</p>
+    </div>
+
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="checkout-layout">
+
+
+            <!-- =========================
+                 Customer Information
+            ========================== -->
+
+            <div class="checkout-left">
+
+                <div class="checkout-card">
+
+                    <div class="card-title">
+                        <h2>Delivery Information</h2>
+                        <p>Please enter your delivery details.</p>
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="full_name">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="full_name"
+                                name="full_name"
+                                value="{{ profile.full_name|default:'' }}"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                value="{{ profile.phone|default:'' }}"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Address
+                        </label>
+
+                        <textarea
+                            id="address"
+                            name="address"
+                            rows="4"
+                            placeholder="Enter your delivery address"
+                            required
+                        >{{ profile.address|default:'' }}</textarea>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                value="{{ profile.city|default:'' }}"
+                                placeholder="Enter your city"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="country">
+                                Country
+                            </label>
+
+                            <input
+                                type="text"
+                                id="country"
+                                name="country"
+                                value="{{ profile.country|default:'' }}"
+                                placeholder="Enter your country"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     Payment Method
+                ========================== -->
+
+                <div class="checkout-card">
+
+                    <div class="card-title">
+
+                        <h2>Payment Method</h2>
+
+                        <p>
+                            Select your preferred payment method.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Cash on Delivery -->
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="cod"
+                            checked
+                        >
+
+                        <div class="payment-content">
+
+                            <strong>
+                                Cash on Delivery
+                            </strong>
+
+                            <span>
+                                Pay when your order arrives.
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- KBZPay -->
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment_method"
+                            value="lipa-na-mpesa"
+                        >
+
+                        <div class="payment-content">
+
+                            <strong>
+                                Lipa Na Mpesa
+                            </strong>
+
+                            <span>
+                                Pay securely with an STK Push mpesa.
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Order Summary
+            ========================== -->
+
+            <div class="checkout-right">
+
+                <div class="checkout-card order-summary">
+
+                    <div class="card-title">
+
+                        <h2>Your Order</h2>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Cart Items
+                    ========================== -->
+
+                    <div class="order-items">
+
+                        {% for item in cart_items %}
+
+                        <div class="order-item">
+
+                            <div class="order-book-image">
+
+                                {% if item.book.cover %}
+
+                                    <img
+                                        src="{{ item.book.cover.url }}"
+                                        alt="{{ item.book.title }}"
+                                    >
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="order-book-info">
+
+                                <h3>
+                                    {{ item.book.title }}
+                                </h3>
+
+                                <p>
+                                    Qty: {{ item.quantity }}
+                                </p>
+
+                                <p>
+                                    KSh {{ item.book.price|intcomma }}
+                                </p>
+
+                            </div>
+
+
+                            <strong class="order-item-price">
+
+                                KSh {{ item.book.price|add:"0"|intcomma }} 
+
+                            </strong>
+
+                        </div>
+
+                        {% empty %}
+
+                        <p>
+                            Your cart is empty.
+                        </p>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <!-- Coupon -->
+
+<div class="coupon-box">
+
+    <div class="coupon-title">
+        <h3>Have a coupon?</h3>
+        <p>Enter your coupon code to get a discount.</p>
+    </div>
+
+    <div class="coupon-form">
+
+        <input
+            type="text"
+            name="coupon_code"
+            placeholder="Enter coupon code"
+            value="{{ coupon_code }}"
+        >
+
+        <button
+            type="submit"
+            name="apply_coupon"
+            value="1"
+        >
+            Apply
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="summary-divider"></div>
+
+
+<!-- Coupon Result -->
+
+{% if coupon %}
+
+    <p class="coupon-success">
+        Coupon "{{ coupon.code }}" applied:
+        {{ coupon.discount_percent }}% OFF
+    </p>
+
+{% elif coupon_code %}
+
+    <p class="coupon-error">
+        Invalid or inactive coupon code.
+    </p>
+
+{% endif %}
+
+
+<div class="summary-divider"></div>
+                    <!-- =========================
+                         Subtotal
+                    ========================== -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            KSh {{ subtotal|intcomma }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Discount
+                    ========================== -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <strong>
+                            - KSh {{ discount_amount|intcomma }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Shipping
+                    ========================== -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Shipping
+                        </span>
+
+                        <strong>
+                            KSh 450
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <!-- =========================
+                         Total
+                    ========================== -->
+
+                    <div class="summary-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            KSh {{ total|intcomma }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- =========================
+                         Place Order
+                    ========================== -->
+
+                    <button
+                        type="submit"
+                        class="place-order-btn"
+                        name="place_order"
+                        value="1"
+                    >
+                        Place Order
+                    </button>
+
+
+                    <a
+                        href="{% url 'cart' %}"
+                        class="back-cart"
+                    >
+                        Back to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

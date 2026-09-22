@@ -1,0 +1,1375 @@
+/* =========================================
+   BOOK DETAIL PAGE
+========================================= */
+
+.bd-page {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.bd-container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   BREADCRUMB
+========================================= */
+
+.bd-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 22px 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.bd-breadcrumb a {
+    color: var(--muted);
+    transition: .2s;
+}
+
+.bd-breadcrumb a:hover {
+    color: var(--primary);
+}
+
+.bd-breadcrumb svg {
+    width: 13px;
+    height: 13px;
+}
+
+.bd-breadcrumb span {
+    max-width: 220px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.bd-main {
+    padding: 35px 0 80px;
+}
+
+.bd-product-grid {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+
+    gap: 75px;
+
+    align-items: start;
+}
+
+
+/* =========================================
+   COVER
+========================================= */
+
+.bd-gallery {
+    display: flex;
+    justify-content: center;
+}
+
+.bd-cover {
+    width: 350px;
+    height: 300px;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: var(--surface);
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .12);
+}
+
+.bd-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.bd-no-cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.bd-no-cover svg {
+    width: 35px;
+    height: 35px;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.bd-info {
+    padding-top: 10px;
+}
+
+.bd-category {
+    display: inline-block;
+
+    margin-bottom: 13px;
+
+    color: var(--primary);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.bd-title {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+}
+
+.bd-author {
+    margin: 12px 0 20px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.bd-author strong {
+    color: var(--text);
+}
+
+
+/* =========================================
+   RATING
+========================================= */
+
+.bd-rating {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 22px;
+}
+
+.bd-stars {
+    display: flex;
+    gap: 3px;
+}
+
+.bd-stars svg {
+    width: 15px;
+    height: 15px;
+
+    color: #f5b301;
+
+    fill: #f5b301;
+}
+
+.bd-rating strong {
+    font-size: 12px;
+}
+
+.bd-rating span {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.bd-price {
+    margin-bottom: 20px;
+
+    color: var(--text);
+
+    font-size: 29px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.bd-description {
+    max-width: 650px;
+
+    margin: 0 0 22px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+
+/* =========================================
+   STOCK
+========================================= */
+
+.bd-stock {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 22px;
+
+    color: #20a464;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.bd-stock svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================
+   PURCHASE
+========================================= */
+
+.bd-purchase {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.bd-quantity {
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--surface);
+}
+
+.bd-quantity button {
+    width: 40px;
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.bd-quantity button:hover {
+    color: var(--primary);
+}
+
+.bd-quantity svg {
+    width: 14px;
+    height: 14px;
+}
+
+.bd-quantity input {
+    width: 35px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: var(--text);
+
+    text-align: center;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.bd-quantity input::-webkit-inner-spin-button,
+.bd-quantity input::-webkit-outer-spin-button {
+    appearance: none;
+}
+
+
+.bd-cart-btn {
+    height: 48px;
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: var(--primary);
+
+    color: #fff;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.bd-cart-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(49, 94, 234, .25);
+}
+
+.bd-cart-btn svg {
+    width: 16px;
+}
+
+
+.bd-wishlist {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.bd-wishlist:hover {
+    color: #e05272;
+    border-color: #e05272;
+}
+
+.bd-wishlist svg {
+    width: 17px;
+}
+
+.bd-wishlist.wishlist-active {
+    color: #e05272;
+    border-color: #e05272;
+}
+
+.bd-wishlist.wishlist-active svg {
+    fill: #e05272;
+}
+
+.bd-buy-btn {
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.bd-buy-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.bd-buy-btn svg {
+    width: 15px;
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.bd-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 16px;
+
+    margin-top: 28px;
+    padding-top: 24px;
+
+    border-top: 1px solid var(--border);
+}
+
+.bd-meta div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bd-meta span {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.bd-meta strong {
+    color: var(--text);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.bd-information {
+    padding: 70px 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.bd-tabs {
+    display: flex;
+    gap: 30px;
+
+    margin-bottom: 35px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.bd-tab {
+    position: relative;
+
+    padding: 0 0 15px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.bd-tab.active {
+    color: var(--primary);
+}
+
+.bd-tab.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -1px;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--primary);
+}
+
+.bd-info-grid {
+    display: grid;
+
+    grid-template-columns: 1.2fr .8fr;
+
+    gap: 70px;
+}
+
+.bd-description-box h2,
+.bd-specifications h2 {
+    margin: 0 0 18px;
+
+    color: var(--text);
+
+    font-size: 21px;
+}
+
+.bd-description-box p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+
+/* =========================================
+   SPECIFICATIONS
+========================================= */
+
+.bd-spec-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--border);
+}
+
+.bd-spec-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 15px;
+
+    background: var(--surface);
+}
+
+.bd-spec-grid span {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+}
+
+.bd-spec-grid strong {
+    color: var(--text);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   REVIEWS
+========================================= */
+
+.bd-reviews {
+    padding: 75px 0;
+
+    background: var(--surface);
+
+    border-top: 1px solid var(--border);
+}
+
+.bd-section-heading {
+    margin-bottom: 35px;
+}
+
+.bd-section-heading span {
+    color: var(--primary);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.bd-section-heading h2 {
+    margin: 7px 0 0;
+
+    color: var(--text);
+
+    font-size: 28px;
+}
+
+.bd-review-layout {
+    display: grid;
+
+    grid-template-columns: 220px 1fr;
+
+    gap: 55px;
+}
+
+.bd-rating-summary {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    padding: 25px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--bg);
+}
+
+.bd-rating-summary > strong {
+    font-size: 42px;
+    line-height: 1;
+}
+
+.bd-rating-summary > span {
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.bd-review-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.bd-review {
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.bd-review-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.bd-review-header strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+}
+
+.bd-review-stars {
+    display: flex;
+    gap: 2px;
+}
+
+.bd-review-stars svg {
+    width: 12px;
+    height: 12px;
+
+    color: #f5b301;
+
+    fill: #f5b301;
+}
+
+.bd-review time {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.bd-review p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.bd-empty-review {
+    min-height: 140px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    color: var(--muted);
+}
+
+
+/* =========================================
+   RELATED BOOKS
+========================================= */
+
+.bd-related {
+    padding: 75px 0;
+}
+
+.bd-books-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.bd-book-card {
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+
+    transition: .3s;
+}
+
+.bd-book-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, .08);
+}
+
+.bd-book-image {
+    display: block;
+
+    height: 260px;
+
+    overflow: hidden;
+
+    background: var(--bg);
+}
+
+.bd-book-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform .4s;
+}
+
+.bd-book-card:hover .bd-book-image img {
+    transform: scale(1.04);
+}
+
+.bd-card-no-cover {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--muted);
+}
+
+.bd-book-content {
+    padding: 16px;
+}
+
+.bd-book-content > span {
+    color: var(--primary);
+
+    font-size: 8px;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bd-book-content h3 {
+    margin: 7px 0;
+
+    font-size: 13px;
+}
+
+.bd-book-content h3 a {
+    color: var(--text);
+}
+
+.bd-book-content p {
+    margin: 0 0 12px;
+
+    overflow: hidden;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.bd-card-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bd-card-bottom strong {
+    color: var(--text);
+
+    font-size: 14px;
+}
+
+.bd-card-bottom button {
+    width: 32px;
+    height: 32px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.bd-card-bottom button:hover {
+    color: #e05272;
+    border-color: #e05272;
+}
+
+.bd-card-bottom svg {
+    width: 14px;
+}
+
+.bd-no-related {
+    color: var(--muted);
+}
+
+.bd-empty-star {
+    opacity: 0.25;
+}
+
+/* =========================================================
+   WRITE A REVIEW FORM
+========================================================= */
+
+.bd-review-form {
+    width: 100%;
+    max-width: 520px;
+
+    margin: 40px auto 0;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+
+.bd-review-form h3 {
+    margin: 0 0 25px;
+
+    color: var(--dark);
+
+    font-size: 25px;
+    line-height: 1.3;
+}
+
+
+/* FORM GROUP */
+
+.review-form-group {
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+.review-form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--dark);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* RATING */
+
+.review-form-group select {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: var(--dark);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.review-form-group select:hover {
+    border-color: var(--primary-light);
+}
+
+.review-form-group select:focus {
+    border-color: var(--primary);
+}
+
+
+/* TEXTAREA */
+
+.review-form-group textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 140px;
+
+    padding: 14px 15px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: var(--dark);
+
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition: .25s ease;
+}
+
+.review-form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+.review-form-group textarea:hover {
+    border-color: var(--primary-light);
+}
+
+.review-form-group textarea:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .05);
+}
+
+
+/* SUBMIT BUTTON */
+
+.bd-review-form button[type="submit"] {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 150px;
+    height: 44px;
+
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--primary);
+
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.bd-review-form button[type="submit"]:hover {
+    background: var(--primary-light);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* LOGIN MESSAGE */
+
+.bd-review-form > p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.bd-review-form > p a {
+    color: var(--primary);
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.bd-review-form > p a:hover {
+    color: var(--primary-light);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   REVIEW FORM RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .bd-review-form {
+        width: 100%;
+        max-width: 100%;
+
+        margin: 30px auto 0;
+
+        padding: 20px;
+    }
+
+    .bd-review-form h3 {
+        margin-bottom: 20px;
+
+        font-size: 22px;
+    }
+
+    .review-form-group {
+        margin-bottom: 17px;
+    }
+
+    .review-form-group select {
+        width: 100%;
+    }
+
+    .review-form-group textarea {
+        min-height: 120px;
+    }
+
+    .bd-review-form button[type="submit"] {
+        width: 100%;
+    }
+
+}
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
+    .bd-product-grid {
+        grid-template-columns: 330px 1fr;
+
+        gap: 45px;
+    }
+
+    .bd-cover {
+        width: 300px;
+        height: 430px;
+    }
+
+    .bd-info-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+    .bd-books-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* ================================
+   REVIEW ACTIONS
+================================ */
+
+.bd-review-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+
+/* EDIT */
+
+.bd-edit-review summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 13px;
+
+    border: 1px solid #2563eb;
+    border-radius: 7px;
+
+    background: transparent;
+    color: #2563eb;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    list-style: none;
+    transition: .2s ease;
+}
+
+.bd-edit-review summary:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.bd-edit-review summary::-webkit-details-marker {
+    display: none;
+}
+
+
+/* DELETE */
+
+.bd-delete-review {
+    padding: 7px 13px;
+
+    border: 1px solid #dc2626;
+    border-radius: 7px;
+
+    background: transparent;
+    color: #dc2626;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.bd-delete-review:hover {
+    background: #dc2626;
+    color: white;
+}
+
+
+/* ICON */
+
+.bd-review-actions svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 750px) {
+
+    .bd-container {
+        width: calc(100% - 30px);
+    }
+
+    .bd-main {
+        padding: 20px 0 55px;
+    }
+
+    .bd-product-grid {
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+    }
+
+    .bd-gallery {
+        order: 1;
+    }
+
+    .bd-info {
+        order: 2;
+
+        padding-top: 0;
+    }
+
+    .bd-cover {
+        width: min(280px, 80vw);
+        height: 400px;
+    }
+
+    .bd-title {
+        font-size: 34px;
+    }
+
+    .bd-purchase {
+        flex-wrap: wrap;
+    }
+
+    .bd-quantity {
+        width: 125px;
+    }
+
+    .bd-cart-btn {
+        flex: 1;
+    }
+
+    .bd-tabs {
+        gap: 20px;
+
+        overflow-x: auto;
+    }
+
+    .bd-tab {
+        flex-shrink: 0;
+    }
+
+    .bd-review-layout {
+        grid-template-columns: 1fr;
+
+        gap: 30px;
+    }
+
+    .bd-rating-summary {
+        align-items: center;
+
+        text-align: center;
+    }
+
+    .bd-books-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+    .bd-book-image {
+        height: 220px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 450px) {
+
+    .bd-breadcrumb {
+        font-size: 9px;
+    }
+
+    .bd-cover {
+        width: 235px;
+        height: 340px;
+    }
+
+    .bd-title {
+        font-size: 29px;
+    }
+
+    .bd-price {
+        font-size: 24px;
+    }
+
+    .bd-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .bd-spec-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bd-book-image {
+        height: 190px;
+    }
+
+    .bd-book-content {
+        padding: 12px;
+    }
+
+    .bd-book-content h3 {
+        font-size: 11px;
+    }
+
+    .bd-card-bottom strong {
+        font-size: 12px;
+    }
+}

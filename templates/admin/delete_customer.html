@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Delete Customer Account
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h3>Delete Customer Account?</h3>
+        <p>Confirm category deletion</p>
+    </div>
+</div>
+
+<div class="delete-box">
+    <div class="delete-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    
+    <div class="delete-product-info">
+        <h4>Are you sure you want to delete "{{ customer.name }}"?</h4>
+        <p>This action cannot be undone. All related products under this category might be affected.</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="delete-actions">
+            <button type="submit" style="background-color: #dc2626; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Yes, Delete</button>
+            <a href="customers" style="background-color: #e2e8f0; color: #334155; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: 600;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

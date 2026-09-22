@@ -1,0 +1,134 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Add Category
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Add Category</h3>
+        <p>Create a new product category</p>
+    </div>
+
+    <a href="{% url 'categories' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <h5>Category Information</h5>
+    </div>
+
+    <div class="container">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+                <!-- Category Name -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Category Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter category name"
+                        value="{{ category.name }}">
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select name="status" class="form-select">
+
+                        <option value="True" {% if category.status %}selected{% endif %}>
+                            Active
+                        </option>
+
+                        <option value="False" {% if not category.status %}selected{% endif %}>
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea 
+                        class="form-control"
+                        name="description"
+                        rows="4"
+                        placeholder="Enter category description">
+                        {{category.description}}
+                </textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="col-12">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-check-circle"></i>
+                        Add Category
+
+                    </button>
+
+                    <a
+                        href="{% url 'categories' %}"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

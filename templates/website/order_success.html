@@ -1,0 +1,221 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/order_success.css' %}">
+{% endblock %}
+
+{% block title %}Order Successful - EVALAST MOTORCYCLES{% endblock %}
+
+{% block main %}
+
+<div class="success-page">
+
+    <!-- Success Header -->
+    <div class="success-header">
+        <div class="success-icon">✓</div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>
+            Thank you for your order.
+            Your order has been received successfully.
+        </p>
+
+        <span class="order-number">
+            Order #{{ order.id }}
+        </span>
+    </div>
+
+
+    <div class="order-container">
+
+        <!-- Order Items -->
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Order Items</h2>
+            </div>
+
+            {% for item in order.items.all %}
+
+            <div class="order-item">
+
+                <div class="item-image">
+                    {% if item.book.cover %}
+                        <img src="{{ item.book.cover.url }}"
+                             alt="{{ item.book.title }}">
+                    {% endif %}
+                </div>
+
+                <div class="item-info">
+
+                    <h3>{{ item.book.title }}</h3>
+
+                    <p>
+                        Quantity:
+                        <strong>{{ item.quantity }}</strong>
+                    </p>
+
+                    <p>
+                        Price:
+                        <strong>KSh {{ item.price|intcomma }}</strong>
+                    </p>
+
+                </div>
+
+                <div class="item-total">
+                    KSh {{ item.get_total|intcomma }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Order Summary -->
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Order Summary</h2>
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+
+                <span>
+                    KSh {{ order.total_amount|add:order.discount_amount|intcomma }}
+                </span>
+            </div>
+
+
+            {% if order.coupon %}
+
+            <div class="summary-row coupon-row">
+                <span>
+                    Coupon
+                    <small>({{ order.coupon.code }})</small>
+                </span>
+
+                <span>
+                    -KSh {{ order.discount_amount|intcomma }}
+                </span>
+            </div>
+
+            {% endif %}
+
+
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Free</span>
+            </div>
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="summary-total">
+                <span>Total</span>
+
+                <strong>
+                    KSh {{ order.total_amount|intcomma }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- Payment Information -->
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Payment Information</h2>
+            </div>
+
+            <div class="info-row">
+                <span>Payment Method</span>
+
+                <strong>
+                    {{ order.get_payment_method_display }}
+                </strong>
+            </div>
+
+            <div class="info-row">
+                <span>Payment Status</span>
+
+                <span class="status payment-status">
+                    {{ order.get_payment_status_display }}
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span>Order Status</span>
+
+                <span class="status order-status">
+                    {{ order.get_status_display }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- Delivery Information -->
+        <div class="order-card">
+
+            <div class="card-title">
+                <h2>Delivery Information</h2>
+            </div>
+
+            <div class="delivery-info">
+
+                <p>
+                    <strong>Name</strong>
+                    {{ order.full_name }}
+                </p>
+
+                <p>
+                    <strong>Phone</strong>
+                    {{ order.phone }}
+                </p>
+
+                <p>
+                    <strong>Address</strong>
+                    {{ order.address }}
+                </p>
+
+                <p>
+                    <strong>City</strong>
+                    {{ order.city }}
+                </p>
+
+                <p>
+                    <strong>Country</strong>
+                    {{ order.country }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="order-actions">
+
+            <a href="{% url 'shop' %}" class="continue-btn">
+                Continue Shopping
+            </a>
+
+            <a href="{% url 'my_orders' %}" class="orders-btn">
+                View My Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

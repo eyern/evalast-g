@@ -1,0 +1,344 @@
+/* =========================
+   Dashboard Header
+========================= */
+
+.dashboard-header {
+    margin-bottom: 25px;
+}
+
+
+.dashboard-header h3 {
+    margin-bottom: 5px;
+
+    font-weight: 700;
+
+    color: #1e293b;
+}
+
+
+.dashboard-header p {
+    margin-bottom: 0;
+
+    color: #64748b;
+}
+
+
+/* =========================
+   Dashboard Cards
+========================= */
+
+.dashboard-card {
+    height: 100%;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+    transition: 0.3s ease;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.dashboard-card h6 {
+    margin-bottom: 8px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+.dashboard-card h3 {
+    margin: 0;
+
+    color: #1e293b;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   Card Icons
+========================= */
+
+.card-icon {
+    width: 55px;
+
+    height: 55px;
+
+    min-width: 55px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: white;
+
+    font-size: 24px;
+}
+
+
+.card-icon.blue {
+    background: #2563eb;
+}
+
+
+.card-icon.green {
+    background: #16a34a;
+}
+
+
+.card-icon.orange {
+    background: #f59e0b;
+}
+
+
+.card-icon.purple {
+    background: #9333ea;
+}
+
+
+/* =========================
+   Dashboard Box
+========================= */
+
+.dashboard-box {
+    height: 100%;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.dashboard-box h5 {
+    margin-bottom: 20px;
+
+    color: #1e293b;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   Top Selling Books
+========================= */
+
+.top-books {
+    padding: 0;
+
+    margin: 0;
+}
+
+
+.top-books li {
+    list-style: none;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+
+.top-books li:last-child {
+    border-bottom: none;
+}
+
+
+.top-book-cover {
+    width: 45px;
+
+    height: 60px;
+
+    min-width: 45px;
+
+    border-radius: 6px;
+
+    object-fit: cover;
+}
+
+
+.top-book-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.top-book-info h6 {
+    margin: 0 0 5px;
+
+    font-weight: 600;
+
+    color: #1e293b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.top-book-info small {
+    color: #64748b;
+}
+
+
+.top-book-sales {
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+.top-book-sales strong {
+    display: block;
+
+    color: #1e293b;
+}
+
+
+.top-book-sales small {
+    color: #64748b;
+}
+
+
+/* =========================
+   Tables
+========================= */
+
+.dashboard-table {
+    margin: 0;
+}
+
+
+.dashboard-table thead {
+    background: #f8fafc;
+}
+
+
+.dashboard-table th {
+    padding: 14px;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+
+.dashboard-table td {
+    padding: 14px;
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 991.98px) {
+
+    .dashboard-box {
+        padding: 20px;
+    }
+
+}
+
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 575.98px) {
+
+    .dashboard-header {
+        margin-bottom: 20px;
+    }
+
+
+    .dashboard-header h3 {
+        font-size: 22px;
+    }
+
+
+    .dashboard-header p {
+        font-size: 14px;
+    }
+
+
+    .dashboard-card {
+        padding: 16px;
+
+        gap: 15px;
+    }
+
+
+    .card-icon {
+        width: 50px;
+
+        height: 50px;
+
+        min-width: 50px;
+
+        font-size: 22px;
+    }
+
+
+    .dashboard-card h3 {
+        font-size: 22px;
+    }
+
+
+    .dashboard-box {
+        padding: 16px;
+    }
+
+
+    .top-books li {
+        gap: 12px;
+    }
+
+
+    .top-book-cover {
+        width: 40px;
+
+        height: 55px;
+
+        min-width: 40px;
+    }
+
+}

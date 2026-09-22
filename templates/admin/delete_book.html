@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+Delete Product
+{% endblock %}
+
+
+
+
+{% block content %}
+
+
+<div class="delete-box">
+  <div class="delete-icon">
+    <i class="bi bi-exclamation-triangle"></i>
+  </div>
+
+  <h3>Delete Product</h3>
+
+  <p>Are you sure you want to delete "{{book.title}}"?</p>
+
+  <div class="delete-actions">
+    <form method="POST">
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i>
+
+        Delete
+      </button>
+    </form>
+
+    <a href="#" class="btn btn-secondary"> Cancel </a>
+  </div>
+</div>
+{% endblock %}
+

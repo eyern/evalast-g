@@ -1,0 +1,257 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Update Order
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h3>Update Order</h3>
+
+        <p>Update order information</p>
+
+    </div>
+
+    <a href="{% url 'order_detail' order.id %}"
+       class="btn btn-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Back
+
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+
+                <!-- Order ID -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Order ID
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="#{{ order.id }}"
+                        readonly>
+
+                </div>
+
+
+                <!-- Customer -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Customer
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ order.full_name }}"
+                        readonly>
+
+                </div>
+
+
+                <!-- Payment Status -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Payment Status
+                    </label>
+
+                    <select
+                        name="payment_status"
+                        class="form-select">
+
+                        <option
+                            value="pending"
+                            {% if order.payment_status == 'pending' %}
+                                selected
+                            {% endif %}
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="paid"
+                            {% if order.payment_status == 'paid' %}
+                                selected
+                            {% endif %}
+                        >
+                            Paid
+                        </option>
+
+                        <option
+                            value="failed"
+                            {% if order.payment_status == 'failed' %}
+                                selected
+                            {% endif %}
+                        >
+                            Failed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Payment Method -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Payment Method
+                    </label>
+
+                    <select
+                        name="payment_method"
+                        class="form-select">
+
+                        <option
+                            value="cod"
+                            {% if order.payment_method == 'cod' %}
+                                selected
+                            {% endif %}
+                        >
+                            Cash on Delivery
+                        </option>
+
+                        <option
+                            value="lipa-na-mpesa"
+                            {% if order.payment_method == 'lipa-na-mpesa' %}
+                                selected
+                            {% endif %}
+                        >
+                            Lipa Na Mpesa
+                        </option>
+
+
+                    </select>
+
+                </div>
+
+
+                <!-- Order Status -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Order Status
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select">
+
+                        <option
+                            value="pending"
+                            {% if order.status == 'pending' %}
+                                selected
+                            {% endif %}
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="processing"
+                            {% if order.status == 'processing' %}
+                                selected
+                            {% endif %}
+                        >
+                            Processing
+                        </option>
+
+                        <option
+                            value="shipped"
+                            {% if order.status == 'shipped' %}
+                                selected
+                            {% endif %}
+                        >
+                            Shipped
+                        </option>
+
+                        <option
+                            value="delivered"
+                            {% if order.status == 'delivered' %}
+                                selected
+                            {% endif %}
+                        >
+                            Delivered
+                        </option>
+
+                        <option
+                            value="cancelled"
+                            {% if order.status == 'cancelled' %}
+                                selected
+                            {% endif %}
+                        >
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="col-12">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Update Order
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'order_detail' order.id %}"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

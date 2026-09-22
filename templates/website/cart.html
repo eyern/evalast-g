@@ -1,0 +1,171 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/cart.css' %}">
+{% endblock %}
+
+{% load humanize %}
+
+{% block title %}
+    Shopping Cart - Evalast Motorcycles
+{% endblock %}
+
+{% block main %}
+
+<div class="cart-container">
+
+    <div class="cart-header">
+        <h1>Shopping Cart</h1>
+        <p>Review your selected books before checkout.</p>
+    </div>
+
+
+    {% if cart.items %}
+
+    <div class="cart-content">
+
+        <!-- Cart Items -->
+        <div class="cart-items">
+
+            {% for item in cart.items.all %}
+
+            <div class="cart-item">
+
+                <!-- Book Image -->
+                <div class="cart-item-image">
+
+                    {% if item.book.cover %}
+                        <img
+                            src="{{ item.book.cover.url }}"
+                            alt="{{ item.book.title }}"
+                        >
+                    {% else %}
+                        <div class="no-image">
+                            No Image
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Book Information -->
+                <div class="cart-item-info">
+
+                    <h2>
+                        {{ item.book.title }}
+                    </h2>
+
+                    {% if item.book.author %}
+                        <p class="cart-author">
+                            {{ item.book.author }}
+                        </p>
+                    {% endif %}
+
+                    <p class="cart-price">
+                        KSh {{ item.book.price|intcomma }}
+                    </p>
+
+                </div>
+
+
+                <!-- Quantity -->
+                <div class="cart-quantity">
+
+                    <a href="{% url 'decrease_quantity' item.id %}">-</a>
+
+                    <span>
+                        {{ item.quantity }}
+                    </span>
+
+                    <a href="{% url 'increase_quantity' item.id %}">+</a>
+
+                </div>
+
+
+                <!-- Item Total -->
+                <div class="cart-item-total">
+
+                    <strong>
+                        KSh {{ item.total_price|intcomma }}
+                    </strong>
+
+                </div>
+
+
+                <!-- Remove -->
+                <div class="cart-remove">
+
+                    <a href="{% url 'remove_item' item.id %}">
+                        Remove
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+
+            <h2>
+                Cart Summary
+            </h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong>KSh {{ subtotal|intcomma }}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Shipping</span>
+                <strong>Free</strong>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>KSh {{ total|intcomma }}</strong>
+            </div>
+
+            <a href="{% url 'checkout' %}" class="checkout-btn">
+                Proceed to Checkout
+            </a>
+
+            <a href="{% url 'shop' %}" class="continue-shopping">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- Empty Cart -->
+
+    <div class="empty-cart">
+
+        <h2>Your cart is empty</h2>
+
+        <p>
+            You haven't added any books to your cart yet.
+        </p>
+
+        <a href="{% url 'shop' %}">
+            Continue Shopping
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

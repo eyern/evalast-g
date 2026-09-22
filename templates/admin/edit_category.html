@@ -1,0 +1,128 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Category
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Edit Category</h3>
+        <p>Update book category information</p>
+    </div>
+
+    <a href="#" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <h5>Category Information</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row g-4">
+
+                <!-- Category Name -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Category Name
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="Programming">
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select class="form-select">
+
+                        <option selected>
+                            Active
+                        </option>
+
+                        <option>
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="4">Books related to programming and software development.</textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="col-12">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-check-circle"></i>
+                        Update Category
+
+                    </button>
+
+                    <a
+                        href="#"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

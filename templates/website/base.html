@@ -1,0 +1,79 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="en">
+    
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>{% block title %} Evalast Motorcycles {% endblock %}</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet"/>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+        <link rel="stylesheet" href="{% static 'website/css/home.css' %}" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap-grid.css" integrity="sha512-nIykAn2cWE7iACgVi+thu4am6DGj+0WNXEa8o40WXBOnovP6WuBrIvrjwfxsqMjddjRbgyQqaRt92uQLV60VYw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+
+        {% block extra_css %}
+        {% endblock %}
+
+    </head>
+
+    <!-- FLOATING ACTIONS -->
+  <div class="fl-a">
+    <a href="tel:+254714314360" class="flb cl" title="Call 0714-314-360">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+        <path
+          d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.43 10.34 19.79 19.79 0 01.36 1.75 2 2 0 012.34 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+      </svg>
+    </a>
+    <a href="https://wa.me/254714314360?text=Hi!%20I'm%20from%20Evalast%20Motorcycles%20website%20😊%20." target="_blank"
+      class="flb wa" title="WhatsApp 0714-314-360">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+        <path
+          d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.868-1.426A9.945 9.945 0 0012 22c5.523 0 10-4.477 10-10S17.522 2 11.999 2zm0 18a7.95 7.95 0 01-4.071-1.118l-.291-.173-3.018.883.849-3.1-.19-.309A7.977 7.977 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" />
+      </svg>
+    </a>
+  </div>
+
+    <body>
+        {% include 'includes/website/header.html' %}
+        {% include 'includes/website/message.html' %}
+
+        <main class="my-5">{% block main %}{% endblock %}</main>
+
+        {% include 'includes/website/footer.html' %}
+
+        <!-- Lucide Icons -->
+
+        <script src="https://unpkg.com/lucide@latest"></script>
+
+        <script>
+            lucide.createIcons();
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+        <script src="{% static 'website/js/main.js' %}"></script>
+
+        {% block extra_js %}{% endblock %}
+
+    </body>
+
+</html>

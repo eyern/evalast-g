@@ -1,0 +1,161 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Customer Details
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h3>Customer Details</h3>
+        <p>View customer information and order history</p>
+    </div>
+    <a href="{% url 'customers' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
+
+<!-- Customer Information -->
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                {% if customer.profile.profile_image %}
+                    <img src="{{ customer.profile.profile_image.url }}" class="rounded-circle mb-3" width="100" height="100" style="object-fit: cover;" alt="{{ customer.username }}">
+                {% else %}
+                    <img src="{% static 'admin/images/user.png' %}" class="rounded-circle mb-3" width="100" height="100" alt="Customer">
+                {% endif %}
+
+                <h5>{{ customer.get_full_name|default:customer.username }}</h5>
+
+                {% if customer.is_active %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-danger">Blocked</span>
+                {% endif %}
+
+                <hr>
+
+                <p><strong>Email:</strong><br>{{ customer.email|default:"-" }}</p>
+                <p><strong>Phone:</strong><br>{{ customer.profile.phone|default:"-" }}</p>
+                <p><strong>Joined:</strong><br>{{ customer.date_joined|date:"d M Y" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <small>Total Orders</small>
+                        <h4>{{ total_orders }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <small>Total Spending</small>
+                        <h4>${{ total_spending }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <small>Last Order</small>
+                        <h4>{% if last_order %}#{{ last_order.id }}{% else %}-{% endif %}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h5>Address</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">
+                    {% if customer.profile.address %}
+                        {{ customer.profile.address }}
+                        {% if customer.profile.city %}, {{ customer.profile.city }}{% endif %}
+                        {% if customer.profile.country %}, {{ customer.profile.country }}{% endif %}
+                    {% else %}
+                        No address provided.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order History -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header">
+        <h5>Order History</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>${{ order.total_amount }}</td>
+                        <td>
+                            {% if order.payment_status == 'paid' %}
+                                <span class="badge bg-success">Paid</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ order.payment_status|title }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">{{ order.status }}</span>
+                        </td>
+                        <td>{{ order.created_at|date:"d M Y" }}</td>
+                        <td>
+                            <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4">No orders found for this customer.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Button Only -->
+<div class="mb-4">
+    <a href="{% url 'edit_customer' customer.id %}" class="btn btn-primary">
+        <i class="bi bi-pencil"></i> Edit Customer
+    </a>
+</div>
+
+{% endblock %}

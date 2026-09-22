@@ -1,0 +1,404 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}
+Reports
+{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- Page Header -->
+
+<div class="page-header">
+
+    <div>
+
+        <h3>Reports</h3>
+
+        <p>
+            View store sales and order reports
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- Report Statistics -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Total Revenue -->
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Revenue
+                </small>
+
+                <h4 class="mt-2 mb-0">
+
+                    KSh {{ total_revenue|default:"0.00"|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Total Orders -->
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Orders
+                </small>
+
+                <h4 class="mt-2 mb-0">
+
+                    {{ total_orders|default:"0" }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Books Sold -->
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Products Sold
+                </small>
+
+                <h4 class="mt-2 mb-0">
+
+                    {{ books_sold|default:"0" }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Average Order -->
+
+    <div class="col-md-6 col-lg-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Average Order Value
+                </small>
+
+                <h4 class="mt-2 mb-0">
+
+                    KSh {{ average_order|default:"0.00"|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Filter -->
+
+<form method="GET">
+
+    <div class="product-tools">
+
+        <!-- Start Date -->
+
+        <div>
+
+            <input
+                type="date"
+                name="start_date"
+                value="{{ request.GET.start_date }}"
+                class="form-control">
+
+        </div>
+
+
+
+        <!-- End Date -->
+
+        <div>
+
+            <input
+                type="date"
+                name="end_date"
+                value="{{ request.GET.end_date }}"
+                class="form-control">
+
+        </div>
+
+
+
+        <!-- Report Type -->
+
+        <select
+            name="report_type"
+            class="form-select">
+
+            <option
+                value=""
+                {% if not request.GET.report_type %}selected{% endif %}>
+
+                All Reports
+
+            </option>
+
+
+            <option
+                value="daily"
+                {% if request.GET.report_type == 'daily' %}selected{% endif %}>
+
+                Daily
+
+            </option>
+
+
+            <option
+                value="monthly"
+                {% if request.GET.report_type == 'monthly' %}selected{% endif %}>
+
+                Monthly
+
+            </option>
+
+
+            <option
+                value="yearly"
+                {% if request.GET.report_type == 'yearly' %}selected{% endif %}>
+
+                Yearly
+
+            </option>
+
+        </select>
+
+
+
+        <!-- Filter Button -->
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+
+            <i class="bi bi-funnel"></i>
+
+            Filter
+
+        </button>
+
+    </div>
+
+</form>
+
+
+
+<!-- Report Table -->
+
+<div class="product-table-box">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Period</th>
+
+                    <th>Total Orders</th>
+
+                    <th>Products Sold</th>
+
+                    <th>Revenue</th>
+
+                    <th>Average Order</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for report in reports %}
+
+                <tr>
+
+                    <!-- Number -->
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+
+
+                    <!-- Period -->
+
+                    <td>
+
+                        <strong>
+
+                            {% if request.GET.report_type == 'daily' %}
+
+                                {{ report.period|date:"d M Y" }}
+
+                            {% elif request.GET.report_type == 'yearly' %}
+
+                                {{ report.period|date:"Y" }}
+
+                            {% else %}
+
+                                {{ report.period|date:"M Y" }}
+
+                            {% endif %}
+
+                        </strong>
+
+                    </td>
+
+
+
+                    <!-- Orders -->
+
+                    <td>
+
+                        {{ report.total_orders }}
+
+                    </td>
+
+
+
+                    <!-- Books Sold -->
+
+                    <td>
+
+                        {{ report.books_sold }}
+
+                    </td>
+
+
+
+                    <!-- Revenue -->
+
+                    <td>
+
+                        <strong>
+
+                            KSh {{ report.revenue|floatformat:2 }}
+
+                        </strong>
+
+                    </td>
+
+
+
+                    <!-- Average Order -->
+
+                    <td>
+
+                        KSh {{ report.average_order|floatformat:2 }}
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+
+                <!-- Empty State -->
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="text-center py-5 text-muted">
+
+                        <div class="mb-2">
+
+                            <i
+                                class="bi bi-bar-chart"
+                                style="font-size:40px;">
+                            </i>
+
+                        </div>
+
+                        <h6>
+                            No report data found
+                        </h6>
+
+                        <p class="mb-0">
+
+                            Report data will appear here when orders are available.
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

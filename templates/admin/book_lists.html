@@ -1,0 +1,244 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+Products
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h3>Products</h3>
+        <p>Manage all products in your store</p>
+    </div>
+
+    <a href="{% url 'add_book' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i>
+        Add Product
+    </a>
+
+</div>
+
+
+<!-- Search & Filter -->
+
+<div class="product-tools">
+
+<form method="GET" class="filter-form">
+
+    <!-- Search -->
+    <div class="search-box">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search products..."
+            value="{{ search }}"
+        >
+
+        <button type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+
+    <!-- Category -->
+    <select
+        name="category"
+        class="form-select"
+        onchange="this.form.submit()"
+    >
+        <option value="">
+            All Categories
+        </option>
+
+        {% for category in categories %}
+            <option
+                value="{{ category.id }}"
+                {% if selected_category == category.id|stringformat:"s" %}
+                    selected
+                {% endif %}
+            >
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+
+    <!-- Status -->
+    <select
+        name="status"
+        class="form-select"
+        onchange="this.form.submit()"
+    >
+        <option value="">
+            All Status
+        </option>
+
+        {% for value, label in statuses %}
+            <option
+                value="{{ value }}"
+                {% if selected_status == value %}
+                    selected
+                {% endif %}
+            >
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+
+</form>
+</div>
+</form>
+
+
+<!-- Books Table -->
+
+<div class="product-table-box">
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+           <tbody>
+
+            {% for book in books %}
+
+    <tr>
+
+        <td>
+            {{ forloop.counter }}
+        </td>
+
+
+        <!-- Cover -->
+        <td>
+
+            {% if book.cover %}
+
+                <img
+                    src="{{ book.cover.url }}"
+                    alt="{{ book.title }}"
+                    width="50"
+                    height="70"
+                >
+
+            {% else %}
+
+                No Image
+
+            {% endif %}
+
+        </td>
+
+
+        <!-- Title -->
+        <td>
+            {{ book.title }}
+        </td>
+
+
+        <!-- Author -->
+        <td>
+            {{ book.author }}
+        </td>
+
+
+        <!-- Category -->
+        <td>
+            {{ book.category.name }}
+        </td>
+
+
+        <!-- Price -->
+        <td>
+           KSh {{ book.price|intcomma }}
+        </td>
+
+
+        <!-- Stock -->
+        <td>
+            {{ book.stock }}
+        </td>
+
+
+        <!-- Status -->
+        <td>
+
+            {% if book.status == 'active' %}
+
+                <span class="status active">
+                    Active
+                </span>
+
+            {% else %}
+
+                <span class="status inactive">
+                    Inactive
+                </span>
+
+            {% endif %}
+
+        </td>
+
+
+        <!-- Actions -->
+        <td>
+
+            <a href="{% url 'edit_book' book.id %}" class="badge bg-success">
+                Edit
+            </a>
+
+            <a href="{% url 'delete_book' book.id %}" class="badge bg-danger">
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+
+        <td colspan="9">
+            No products found.
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

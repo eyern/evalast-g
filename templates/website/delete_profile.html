@@ -1,0 +1,69 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+    Delete Account - Evalast Motorcycles
+{% endblock %}
+
+{% block main %}
+
+<div class="profile-container">
+
+    <div class="profile-card delete-card">
+
+        <div class="profile-header">
+
+            <div class="delete-icon">
+                !
+            </div>
+
+            <h1>Delete Account</h1>
+
+            <p>
+                Are you sure you want to delete your EVALAST MOTORCYCLES account?
+            </p>
+
+        </div>
+
+        <div class="delete-warning">
+
+            <p>
+                This action cannot be undone.
+            </p>
+
+            <p>
+                Your account and profile information will be permanently deleted.
+            </p>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="profile-actions">
+
+                <a href="{% url 'profile' %}">
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="delete-account-btn"
+                >
+                    Yes, Delete My Account
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
