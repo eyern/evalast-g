@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =  os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Allowed hosts - read from environment variable (comma-separated values)
 ALLOWED_HOSTS = ['evalast-g-production.up.railway.app', 'https://evalast-g-production.up.railway.app']
