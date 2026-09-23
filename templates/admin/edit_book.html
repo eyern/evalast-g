@@ -64,7 +64,7 @@ Edit Product
             name="author"
             value="{{ book.author }}"
             class="form-control"
-            placeholder="Enter author name" required
+            placeholder="Enter brand name" required
           />
         </div>
 
@@ -210,7 +210,7 @@ Edit Product
             <label>
               <input type="checkbox" name="show_on_home" {% if book.show_on_home %}checked{% endif %}/>
 
-              Show this book on Home Page
+              Show this product on Home Page
             </label>
           </div>
         </div>
@@ -263,7 +263,7 @@ Edit Product
         <div class="col-12">
           <button type="submit" class="btn btn-primary">
             <i class="bi bi-check-circle"></i>
-            Update Book
+            Update Product
           </button>
 
           <a href="{% url 'book_lists' %}" class="btn btn-secondary"> Cancel </a>
