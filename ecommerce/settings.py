@@ -35,7 +35,7 @@ DEBUG = True
 # Allowed hosts - read from environment variable (comma-separated values)
 ALLOWED_HOSTS = ['evalastmotorcycles.com', 'https://evalastmotorcycles.com']
 
-CSRF_TRUSTED_ORIGINS = ['https://evalastmotorycles.com']
+CSRF_TRUSTED_ORIGINS = ['https://evalastmotorcycles.com']
 
 # Application definition
 
