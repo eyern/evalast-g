@@ -57,7 +57,7 @@ Edit Product
         <!-- Author -->
 
         <div class="col-md-6">
-          <label class="form-label"> Author </label>
+          <label class="form-label"> Brand </label>
 
           <input
             type="text"
@@ -91,28 +91,28 @@ Edit Product
         <!-- ISBN -->
 
         <div class="col-md-6">
-          <label class="form-label"> ISBN </label>
+          <label class="form-label"> SKU </label>
 
           <input
             type="text"
             name="isbn"
             class="form-control"
             value="{{ book.isbn }}"
-            placeholder="Enter ISBN"
+            placeholder="Enter frame no/sku"
           />
         </div>
 
         <!-- Publisher -->
 
         <div class="col-md-6">
-          <label class="form-label"> Publisher </label>
+          <label class="form-label"> Shipped By </label>
 
           <input
             type="text"
             name="publisher"
             value="{{ book.publisher }}"
             class="form-control"
-            placeholder="Enter publisher"
+            placeholder="Enter courier company"
           />
         </div>
 
@@ -130,14 +130,14 @@ Edit Product
         <!-- Language -->
 
         <div class="col-md-6">
-          <label class="form-label"> Language </label>
+          <label class="form-label"> Shipped By </label>
 
           <select name="language" class="form-select">
-            <option selected>Select Language</option>
+            <option selected>Garage Zero - Thika</option>
 
-            <option value="Myanmar"{% if book.language == "Myanmar" %}selected{% endif %}>Myanmar</option>
+            <option value="Myanmar"{% if book.language == "Myanmar" %}selected{% endif %}>Garage Zero - Embu</option>
 
-            <option value="English"{% if book.language == "English" %}selected{% endif %}>English</option>
+            <option value="English"{% if book.language == "English" %}selected{% endif %}>Garage Zero - Eldoret</option>
 
             <option>Other</option>
           </select>
@@ -146,18 +146,18 @@ Edit Product
         <!-- Format -->
 
         <div class="col-md-6">
-          <label class="form-label"> Format </label>
+          <label class="form-label"> Showroom </label>
 
           <select name="format" class="form-select">
-            <option selected>Select Format</option>
+            <option selected>All Showrooms</option>
 
-            <option value="Paperback"{% if book.format == "Paperback" %}selected{% endif %}>Paperback</option>
+            <option value="Paperback"{% if book.format == "Paperback" %}selected{% endif %}>Thika</option>
 
-            <option value="Hardcover"{% if book.format == "Hardcover" %}selected{% endif %}>Hardcover</option>
+            <option value="Hardcover"{% if book.format == "Hardcover" %}selected{% endif %}>Embu</option>
 
-            <option value="EPUB"{% if book.format == "EPUB" %}selected{% endif %}>EPUB</option>
+            <option value="EPUB"{% if book.format == "EPUB" %}selected{% endif %}>Eldoret</option>
 
-            <option value="PDF"{% if book.format == "PDF" %}selected{% endif %}>PDF</option>
+            <option value="PDF"{% if book.format == "PDF" %}selected{% endif %}>Nairobi</option>
           </select>
         </div>
 
